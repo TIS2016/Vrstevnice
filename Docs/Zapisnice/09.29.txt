@@ -1,0 +1,41 @@
+﻿Zápisnica z 29.9.2016
+-Prvé stretnutie 
+Zoznam prítomných:
+       cvičiaci P.Petrovič, Matej Vilk, Klára Horváthová, Patrik Priebera
+Neprítommní: Tomáš Boscinec
+Pravidelné stretnutia(vybrať si jedno): - čo najskôr oznámiť
+      Streda po 10:00
+      Štvrtok okrem 11:00-18:00
+      Piatok(počas cvičenia z TIS)
+Agenda:
+1.	1. Cv. Spravené, stretnutie so zadávateľom
+2.	Čo sa dohodlo so zadávateľom :
+a.	Dostaneme vstup ako .png obrázok, alebo .xml mapu
+b.	A z toho vytvoriť 3D model kopca/jamy, ktorý sa dá približovať, točiť
+c.	Projekt z minulého roka treba prerobiť aby to fungovalo
+d.	Načítanie obrázka nakresleného rukou
+3.	Čo boli poznámky cvičiaceho: vstup od užívateľa, či je to kopec alebo jama, openGL, úsečky 
+z vrstevníc a triangular mesh do 3D, heurestika – či uhádneme či je ot kopec alebo jama
+a.	Zistiť či to môže byť interaktívne – feedback od užívateľa
+b.	Zadať ako ďaleko od seba je každá vrstevnica
+c.	Zobarzenie mierky na mape?
+d.	Ofarbiť vrstevnice ktoré sú v rovnakej výške, rovnakej farbe
+4.	Rozdelenie rolí :
+a.	 Dokumentácia : Klára Horváthová
+b.	Implementácia : Boscinec
+c.	Manažment práce: Tomáš
+d.	Manažment komunikácie :  Matej Vilk
+5.	Projket na githube
+6.	Čo máme urobiť do budúceho týždňa : 
+a.	Ganttov diagram – Klára H. Skontroluje, urobíme na cvičení
+b.	Vyrobenie 1. Verzie katalógu požiadaviek a poslať cvičiacemu:	
+i.	Všetci si prečítame minulý projekt, vyjadríme sa k tomu a feedback niekto 
+spracuje (pondelok večer stretnutie)
+ii.	Po revízii novej verzie poslať cvičiacemu, ktorý to skontroluje a potom poslať 
+zadávateľovi či je to OK
+c.	Všetci musíme potvrdiť githubovú pozvánku
+d.	Vytvoriť repozitár a otestovať či nám to funguje a vieme tam pridávať
+i.	Rôzne pokusy na vizualizačné knižnice (openGL)
+ii.	Každému dať niečo konkrétne, čo tam nahrá(nie blbosti)
+
+
