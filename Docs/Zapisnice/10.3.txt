@@ -1,0 +1,24 @@
+03.10.2016 Zápisnica stretnutie
+
+Zoznam prítomnıch:
+	Tomáš Boèinec, Klára Horváthová, Patrik Priebera, Matej Vilk
+
+Agenda:
+- stretnutia so cvièiacim : Štvrtok 8:00
+1. Èo sme doteraz spravili: 
+	- preèítali si dokumentáciu minuloroèného projektu
+	- návrhy na implementáciu - rôzne algoritmy (matica popisujúca vrstevnice, naèítanie dát z obrázka)
+2. Na èom sme sa dohodli a èo sme urobili na stretnutí:
+	- Ganttov diagram
+	- konzultácia návrhov na implementáciu
+	- rozoberanie monıch algoritmov 
+3. Èo máme urobi do budúceho tıdòa : 
+	- 11.10. Vyrobenie 1. Verzie katalógu poiadaviek a posla cvièiacemu:	
+	- 4.10. Všetci si preèítame minulı projekt, vyjadríme sa k tomu a feedback spracujeme cez Skype v stredu 5.10.
+		- Po revízii novej verzie posla cvièiacemu, ktorı to skontroluje a potom posla zadávate¾ovi èi je to OK
+	
+	- Vytvori repozitár a otestova èi nám to funguje a vieme tam pridáva
+		- Rôzne pokusy na vizualizaèné kninice (openGL)
+		- Kadému da nieèo konkrétne, èo tam nahrá(nie blbosti)
+		- Matej Vilk rozpošle obrázky vstupov, kadı nahrá jeden na GIT
+	
