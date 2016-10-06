@@ -1,0 +1,15 @@
+6.10.2016 Zápisnica stretnutia
+
+Zoznam prítomných:
+	Matej Vilk, Klára Horváthová, Patrik Priebera, Tomáš Bočinec
+
+Agenda:
+	- ďalšie stretnutie s cvičiacim o týždeň vo Štvrtok 8:00
+1. Stand up meeting - Zhodnotenie práce jednotlivých členov tímu
+2. Spracovanie špecifikácie do konca týždňa (do utoroka)
+	- Skontrolovať cvičiacim, až tak preposlať p. Baloghovi
+3. Rozobratie štruktúry špecifikácie z prednášky
+4. Diskusia “Z obrázka do .obj”
+	- chain code - kódovanie smermi
+5. Gantt - dependencies
+6. Možné stretnutie s minuloročným tímom
