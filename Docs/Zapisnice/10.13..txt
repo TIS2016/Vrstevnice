@@ -1,0 +1,35 @@
+13.10.2016 Zápisnica - stretnutie s cvièiacim 
+
+Zoznam prítomnıch:
+       cvièiaci P.Petroviè, Matej Vilk, Klára Horváthová, Patrik Priebera, Tomáš Boèinec
+
+Neprítommnı: -
+
+Agenda:
+1. Èo sme doteraz spravili: 
+	- katalóg poiadaviek
+	- ako vyzerajú diagramy
+ 	- OO mappper
+	- grafické rozhranie
+	- rozdelenie práce na diagramoch 
+
+2.Èo boli poznámky cvièiaceho:
+	- Èo sa tıka katalógu poiadaviek:
+		-  
+	- DO PIATKA Odovzda u opravená špecifikáciu
+	- diagramy: 
+		- entita- mapa, vyexportuje, naèítaná, spracovaná, vyzualizovaná, uloená
+		- pouijeme nejakú danú kninicu  interfejsom, priamo od uívate¾a šipka do kninice
+		- vybratá kninica, ktorú pouijeme 
+		- entita: úloisko súborov
+			- dialóg, z ktorého si vyberie akı súbor beriem, pustím program, vyberiem súbor, súborovı systém ho dá, dekódujem obrázok do internıch dát,a.t.ï. 
+		- technológie, pouívate¾ksé rozhranie, dátovı model - popis súborov vstupnıch, vıstupnıch, rozpísa našu internú reprezentáciu vrstevníc - ako budú v pamäti uloené
+3.Èo máme urobi do budúceho tıdòa : 
+	- 14.10. Vıber vstupnıch dát a ich moná implementácia
+	- 14.10. Návrh pouívate¾ského rozhrania
+	- 18.10. Spracovávanie vstupov
+	- Dohodnú meet so zadávate¾om oh¾adom pouívate¾ského rozhrania
+
+
+
+
