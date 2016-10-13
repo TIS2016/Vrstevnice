@@ -1,0 +1,14 @@
+10.10.2016 Zápisnica stretnutia
+
+Zoznam prítomných:
+	Matej Vilk, Klára Horváthová, Patrik Priebera, Tomáš Bočinec
+
+Agenda:
+
+1. Špecifikácia:
+	- finalizácia špecifikácie so všetkými členmi skupiny
+	- jej nahratie na repozitár
+2. Úvod k diagramom
+	- predbežný plán návrhov
+3. Pokročilá diskusia o využiteľných algoritmoch a možnostiach vstupných súborov
+	- možnosť obrázku alebo .omap výstupných súborov z OpenOrienteeringMapper
