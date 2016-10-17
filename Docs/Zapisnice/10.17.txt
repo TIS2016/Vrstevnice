@@ -1,0 +1,23 @@
+17.10.2016 Zápisnica  
+
+Zoznam prítomnıch:
+       Matej Vilk, Klára Horváthová, Patrik Priebera, Tomáš Boèinec
+
+Neprítommnı: -
+
+Agenda:
+1. Èo sme doteraz spravili: 
+	- katalóg poiadaviek
+	- vıstup z OOM, vykreslenie súradníc farebne odíšenıch pdo¾a nadmorskej vıšky
+2. Èo sme urobili na stretnutí:
+	- práca na diagramoch
+	
+3. Èo máme urobi do budúceho tıdòa : 
+	- 14.10. Vıber vstupnıch dát a ich moná implementácia
+	- 14.10. Návrh pouívate¾ského rozhrania
+	- 18.10. Spracovávanie vstupov
+	- Dohodnú meet so zadávate¾om oh¾adom pouívate¾ského rozhrania
+
+
+
+
