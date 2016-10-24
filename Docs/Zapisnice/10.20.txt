@@ -1,0 +1,67 @@
+17.10.2016 Zápisnica  
+
+Zoznam prítomnıch:
+       cvièiaci P.Petroviè, Matej Vilk, Klára Horváthová, Patrik Priebera, Tomáš Boèinec
+
+Neprítommnı: -
+
+Agenda:
+1. Èo sme doteraz spravili: 
+	- revízia špecifikácie poiadaviek
+	- vıstup z OOM, vykreslenie súradníc farebne odíšenıch pdo¾a nadmorskej vıšky
+	- vıvojári systému OOM, ako ukladajú údaje v .xmap
+	- stavovı, erd, use case diagram
+	- bezarové krivky, vykreslenie cez web, 2D model, 
+2. Èo sme urobili na stretnutí:
+	- 
+	
+3. Èo nám povedal cvièiaci:
+	- ERD diagram:
+		- entita vrstevnica
+		- navrhujeme celé aj s doplnkovou a rozšírenou funkcionalitu
+		- vzah medzi dvoma entitami, nie èo robí program, nie akcia, modeluje, zobrazí, vloí/vkladá
+		- vôbec niesú šípky medzi vzahmi, iba úseèky = všetko je rovnocenné
+		- nové naèítanie je urèite zle - 
+		- atribút mapy - mierka, stúpanie na vrstevniciach, .jpg .png formát reprezentácia mapy je atribút a hodnota sú dáta a obrázok
+		- 3d model nacèítanie, poloha kamery, priblíenie , celá póza modelu = atribúty
+	- USE CASE
+		- zobrazenie vıškového rozdielu vrstevníc - farebne sa vizualizuje vıška, = vizualizácia vıšok celého modelu, treba preoísa, lebo to je nepochopite¾né
+		- inım jazykom formuluje, Pouívate¾ - prezerá informácie, - zadáva, - edituje, - rotuje, -pribliuje, -prezerá vıšku daného bodu a modeli, - naèítaie súboru nieje samostatnı use case - skôr celé je prezerá 3D model mapy(naèítanie a zobrazenie)
+		- zobrazenie vıskového rozidelu je extends z prezerá 3D odel mapy
+		- uršite nie šipky ale úseèky
+		- exportuje vıstup, V rámci prezerania modelu - prezerá si .gpx na mape
+		- reim príkazovı riadok - prezerá 3D model includes naèítanie súboru - includes - urèenie vstupu - extends cez prákazovı riadok (zadáva vstupnú mapu), alebo cez dialóg, zadáva súbor cez syst. dialóg, cez príkazovı riadok
+		- rotácia pribliovanie - extends do prezerania
+		- icludes je vdy
+		- extends môe
+	- stavovı 
+		- k stavovému diagram patrí k entite, pasívne stavy tej entity (mapa, 3Dmodel, pouívate¾, ...)
+		- mapa - stavy :
+			- nachádza v úloisku, prirpavená/dodaná na vstupe
+			- vytahovanie údajov, spracovávaná, parsovaná, 
+			- stavovı prechod ktorı zodpovedá nejakej akcii
+			- ak bola vloená a teraz je spracovávaná tak akcia je e "uívate¾ vyberie mapu na zobrazenie" (napísané nad šipkou)
+			- udalos je e je naèítaná a potom je zobrazená - uívte¾ môe robi (akcia prejde znovu do stavu zobrazená )- zmení polohu kamery, priblíi, ...
+			- vyexportovanie - v podobe 3D modelu, prechod 
+			- zobrazená aj s trekom, uívate¾ vyberie trek a amapa prejde o stavu zobrzená do stavu zobrazená aj s trekom, a vie naèáta novı trek, vie ho vypnú, take bude len zobrazená
+	-SEKVENÈNİ: vybra jedne use case z nového diagramu use caseového na to aby se spravili sekvenènı, a tam popísa èo všetko sa bude dia poèas toho jedného use%casu
+3. Èo máme urobi do budúceho tıdòa : 
+	- sekvenènı diagram 
+	- 14.10. Vıber vstupnıch dát a ich moná implementácia
+	- 14.10. Návrh pouívate¾ského rozhrania
+	- 18.10. Spracovávanie vstupov
+	- Dohodnú meet so zadávate¾om oh¾adom pouívate¾ského rozhrania
+	- Dátovı odel - špecifikova príkazovı riadok, interná komunikácia potrebná k zobrazeniu, reprezentované nieèo pri 3D modeli
+	- potreba Dát, nakàmenie 3D dátami, aká vnútorná reprezentácia, <- dátovı model
+	- analıza technológií - dá sa zmeni hocikedy
+	- poui objekty aj keï robíme web  - triedny diagram
+
+
+7: Organizaèné informácie:
+	- budúci štvrtok je školenie - akı inı termín 
+	- buï iba pošleme a P. sa k tomu vyjadrí, upozorni mailom e je, predtım ako pošleme balogovi rozhranie najprv P.
+	- stretávame sa a o dva tıdne - èrtá sa triedny diagram!!!
+
+
+
+
