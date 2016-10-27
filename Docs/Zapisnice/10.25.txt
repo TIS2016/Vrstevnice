@@ -1,0 +1,52 @@
+25.10.2016 Zápisnica  
+
+Zoznam prítomnıch:
+       Matej Vilk, Klára Horváthová, Patrik Priebera, Tomáš Boèinec
+
+Neprítommnı: -
+
+Agenda:
+1. Èo sme doteraz spravili: 
+	- diagramy 
+	- analıza tecnológií
+	- pouívate¾ské rozhranie
+2. Èo sme urobili na stretnutí:
+	- displacement mapa
+	- bezárové krivky do textúry
+	- potom prida vıšku
+	- PointCloud - jednoduchsia vizualizacia, len nemame dostatok bodov
+	- daju sa rendrovat len body, ked su vacsie vytvoria dojem plochy (100x100 bodov a pre kazdy doplnit vysku)
+	- pri vyskovej mape je ovela jednoduchsie zistovat vysku (k utvaru si zapisu vysku)
+	- vzniknu schody a potom rozmazat texturu 
+		-vyhladi to znizenim bodov
+		- keby sme zvysili vrstevnice, tak nam to nepokazi realnu vysku
+	- texturovanie: nastroje v pythone, algoritmus vykreslovania bezárovıch kriviek a priamo obrázok pouijú na znázornenie vıšky, ktorá farba znamená ktorú vıšku
+	- 2. fáza: Vizualizácia : vzniknutı obrázok pošleme do kninice, kde sa vykreslia dané body
+	
+3. Èo nám povedal cvièiaci:
+	- USE CASE: rotuje/pribliuje, prezerá vıšku - extends(includes je nieèo èo tam patrí vdy)
+		- preèo vizuaizácia vıšok nieje tie v rámci prezerania 3D modelu - mono je to ok, ale treba to v dokumente vysvetli
+	-SEKVENÈNİ: zmeni popisy, na rozdiel od oválov v use-case, kde tam kadı ovál zodpovedá nejakému prípadu pouitia za ktorım sa skrıva nejakı scenár, kadá šipka v sekvenènom diagrame je jedna správa-jediná kacia, udalos
+		- nemá èo robi nedokonavı vid
+		- správy sa neèíslujú
+		- nerozumie popisom : preèo súbor posiela správu vidí 3D model
+		- preèo entita súbor, ke´d sú to len nejaké dáta, ale sám nevie niè urobi, nemôem mu posla správu a on nevie správu posla
+3. Èo máme urobi do budúceho tıdòa : 
+	- sekvenènı diagram 
+	- 14.10. Vıber vstupnıch dát a ich moná implementácia
+	- 14.10. Návrh pouívate¾ského rozhrania
+	- 18.10. Spracovávanie vstupov
+	- Dohodnú meet so zadávate¾om oh¾adom pouívate¾ského rozhrania
+	- Dátovı odel - špecifikova príkazovı riadok, interná komunikácia potrebná k zobrazeniu, reprezentované nieèo pri 3D modeli
+	- potreba Dát, nakàmenie 3D dátami, aká vnútorná reprezentácia, <- dátovı model
+	- analıza technológií - dá sa zmeni hocikedy
+	- poui objekty aj keï robíme web  - triedny diagram
+
+
+7: Organizaèné informácie:
+	- predtım ako pošleme balogovi rozhranie najprv P.
+	- stretávame sa a o dva tıdne - èrtá sa triedny diagram!!!
+
+
+
+
