@@ -1,0 +1,10 @@
+02.11.2016 Zápisnica stretnutia
+
+Zoznam prítomných:
+	Tomáš Bočinec, Klára Horváthová, Patrik Priebera, Matej Vilk
+
+Agenda:
+1. Diskusia nacitavania .xmap/.omap suborov mozne problemy
+2. Rozoberanie navrhov Adama Riecickeho
+3. Mailova komunikacia so zadavatelom ohladom neukoncenych vrstevnic
+4. "Upratovanie" v github repozitary
