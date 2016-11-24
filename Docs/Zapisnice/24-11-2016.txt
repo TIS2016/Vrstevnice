@@ -1,0 +1,35 @@
+Zápisnica 24.11.
+
+Zoznam prítomnıch:
+Tomas Boèinec, Patrik Priebera, Matej Vilk, Klára Horváthová
+
+
+Èo sme urobili:
+Poznámky od cvièiaceho:
+Návrh:
+	- prida titulok k obrázku, obrázok è.1 - erd 
+	- sekvenènı diagram - entity sú komponenty v aplikácii a komunikácia medzi nimi, nie z poh¾adu uívate¾a 
+Dekompozícia:
+	gulièky blišie ku komponentom, lebo sú to jeho interfejsi
+	k interfejsu písa akú funkciu sprístupòuje na vonok
+	nie je dôleitá dátová vec, ale skôr èo to robí
+	3D kniznica - pouívate¾ské rozhranie - vizualizácia mapy ako samostatnı komponent, a pouívate¾ské rozhranie - to èo vykresluje tlaèítka a.t.ï.tie oddeli, samostatná škatu¾ka
+	komponent nieje èinnos - meno komponentu (naèítanie .gpx súradníc : správa/ reprezentácia .gpx súborov/ treky, trasy/ spracovávanie trekov, praca s trekmi)
+	chıba to, èo to celé riadi - oddeli pouívate¾ské rozhranie od logiky ktorá to celé robí
+	neorbi spojenie pouíva. rozhr s 3D kninicou ale UI s 3D vizualizácou
+	
+- pouívate¾ské rozhranie : vo ve¾kom okne malé okno, a dá sa medzi tım preklikáva
+- testovacie scenáre : nieje to kompletné
+	fungovanie pribliovania, rotácie
+	prvé vety vyhodi aj frázy ako v neposlednom rade
+	testova aj to èo sa nestihne naprogramova
+	príkazovy riadok - node
+	- skôr vo forme bodov : urobí sa toto - stane sa toto /štrukturovanı text/
+- vykreslenie 2D modelu, da blur? 	
+	
+	
+Èo máme urobi:
+	- na GIT da kód 
+	- rozhranie pouzivatelske - Patrik, rozumny objem prace pre implementaciu 
+	- klara tiez nejaku pracu na implementacii
+	 
