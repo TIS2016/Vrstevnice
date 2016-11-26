@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="assets/css/bootstrap.min.css" rel="stylesheet">
+<link href="assets/css/main.css" rel="stylesheet">
+<title>VRSTEVNICE</title>
+</head>
+<body>
+
+<div class="container">
+ <div class="row">
+	<div class="col-xs-12 menu">
+		<div class="row">			
+			<div class="col-xs-4">
+				<!--File form loader start -->
+				<input  type="file" name="file" id="file"> </input> 
+			</div>
+			<div class="col-xs-4">
+				<!--Setting canvas size-->
+				Velkost canvasu
+				<input  type="number" name="file" value="800" id="text-size" onblur="resizecanvas()"> 
+			</div>
+			<div class="col-xs-4">				
+				<!--DRAW BTN and EXPORT BTN-->
+				<div  id="btn"><button type="button" class="btn btn-success" onclick="start()"> Vykresli </button></div>
+			</div>
+		</div>		
+	</div>
+	<div class="col-xs-12">
+		<!--CANVAS FOR 2D  AND  HEIGHTMAP  -->
+ 		<canvas id="myCanvas" style="border:1px solid #d3d3d3;">
+		Your browser does not support the HTML5 canvas tag.</canvas>
+		<input id="heightmap" name="heightmap" type="hidden"></input>	
+	</div>	
+	<div class="col-xs-12">
+		<!--3d threeJS object-->
+		<div id="main_map">	</div>	
+	</div>
+</div> 
+	</div>
+</body>
+<script type="text/javascript" src="assets/js/Three.js"></script>
+<script type="text/javascript" src="assets/js/ShaderTerrain.js"></script>
+<script type="text/javascript" src="assets/js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="assets/ajax/upload.js"></script>
+<script type="text/javascript" src="assets/js/main.js"></script>
+<script type="text/javascript" src="assets/js/3d.js"></script>
+
+</html>
+
