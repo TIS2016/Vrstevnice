@@ -7,3 +7,10 @@
   height:800px;
   width:800px;
 }
+#map_2d{
+	height:800px;
+	width:800px;
+}
+#heightmap{
+	display: none;
+}
