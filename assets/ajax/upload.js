@@ -1,11 +1,11 @@
 class Parser{
   constructor(file) { //v lines je vystup z AJAX-> parser.php
 		this.file = file;
-		pole = [[[]]];
+		
 	}
 
 	rozprasovanie(){
-
+    data_coordinates = [[[]]];
 		var temp_j;
 		var pole_bezier;
 		var pole_vrstevnica;
@@ -24,9 +24,12 @@ class Parser{
 
 				pole_vrstevnica.push(pole_bezier);
 			}
-			pole.push(pole_vrstevnica);
+			data_coordinates.push(pole_vrstevnica);
 		}
-		pole = pole.splice(1,pole.length);
+		data_coordinates = data_coordinates.splice(1,data_coordinates.length);
+
+    //Rovnica pre pocitanie max a min
+    
     console.log("end parse");
 	}
 
