@@ -1,0 +1,21 @@
+Zápisnica 14.12.
+
+Zoznam prítomnıch:
+Tomas Boèinec, Patrik Priebera, Matej Vilk, Klára Horváthová
+
+
+Èo sme urobili:
+
+- rozdelenie práce
+- riešenie problémov so zloitımi vstupmi od zadávate¾a
+	
+	
+	
+Èo máme urobi:
+	TECHNICKÁ STRÁNKA
+	- Klára .css pouívate¾ské rozhranie
+	- Pao : vytvorenie full screen 3D od návrhu od Tomáša
+	- Mao : oprava naèítania novıch máp od zadávate¾a
+	- Tomáš : úprava vstupov, support Pao
+	- zvyšné úlohy pod¾a issue
+	
