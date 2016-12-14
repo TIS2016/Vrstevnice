@@ -1,0 +1,21 @@
+Zápisnica 8.12.
+
+Zoznam prítomnıch:
+Tomas Boèinec, Patrik Priebera, Matej Vilk, Klára Horváthová
+
+Neprítomnı:
+Pavel Petroviè
+
+
+Èo sme urobili:
+- opravenie návrhu 
+- triedny diagram
+- rozdelenie práce
+- riešenie problémov so zloitımi vstupmi od zadávate¾a
+	
+	
+	
+Èo máme urobi:
+	- Klára nahra novı návrh, diagramy
+	- Pao : pouívate¾ské rozhranie
+	- Mao a Tomáš : implementácia a ošetrenie formátov, vykreslovanie 3D 
