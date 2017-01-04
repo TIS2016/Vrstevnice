@@ -1,11 +1,11 @@
 class Parser{
   constructor(file) { //v lines je vystup z AJAX-> parser.php
 		this.file = file;
-		
+		pole = [[[]]];
 	}
 
 	rozprasovanie(){
-    data_coordinates = [[[]]];
+
 		var temp_j;
 		var pole_bezier;
 		var pole_vrstevnica;
@@ -24,12 +24,9 @@ class Parser{
 
 				pole_vrstevnica.push(pole_bezier);
 			}
-			data_coordinates.push(pole_vrstevnica);
+			pole.push(pole_vrstevnica);
 		}
-		data_coordinates = data_coordinates.splice(1,data_coordinates.length);
-
-    //Rovnica pre pocitanie max a min
-    
+		pole = pole.splice(1,pole.length);
     console.log("end parse");
 	}
 
@@ -59,7 +56,7 @@ document.getElementById('file').onchange = function(){
   formData.append('file', $('#file')[0].files[0]);
 
   $.ajax({
-         url : 'assets/ajax/parser.php',
+         url : '/assets/ajax/parser.php',
          type : 'POST',
          data : formData,
          processData: false,  // tell jQuery not to process the data
