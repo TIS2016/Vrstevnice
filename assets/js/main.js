@@ -15,6 +15,7 @@ function makeMaps(){
 	//Automatically starts after processing the input files.
 	//Portray 2D map and heightmaps
 	// rovnica = (max_x - min_x)/(max_y - min_y);
+  makeCanvasCoordinates();
 	makeHeightMap();
 	make2dMap();
 	//add render and download button
@@ -118,6 +119,80 @@ function make2dMap(){
 		canvas_map.lineWidth = 1;
 		canvas_map.stroke();
 	}
+}
+
+function makeCanvasCoordinates(){
+  console.log("start preratanie Vrstevnic");
+
+  for (var i = 0; i < data_coordinates.length; i++) {
+     for (var j = 0; j < data_coordinates[i].length; j++) {
+        for (var k = 0; k < data_coordinates[i][j].length; k++) {
+            data_coordinates[i][j][k][0] = this.resizresizeToCanvasCoordinatese_me(data_coordinates[i][j][k][0], "x");
+            data_coordinates[i][j][k][1] = this.resizeToCanvasCoordinates(data_coordinates[i][j][k][1], "y");
+            // console.log(pole[i][j][k]);
+        }
+     }
+  }
+
+  console.log("end preratanie Vrstevnic");
+
+  console.log("start preratanie Border");
+
+  for (var m = 0; m < pole_border_temp.length; m++) {
+      pole_border_temp[m][0] = resizeToCanvasCoordinates(pole_border_temp[m][0], "x") < 0 ? 0 : resizeToCanvasCoordinates(pole_border_temp[m][0], "x");
+      pole_border_temp[m][1] = resizeToCanvasCoordinates(pole_border_temp[m][1], "y") < 0 ? 0 : resizeToCanvasCoordinates(pole_border_temp[m][1], "y");
+  }
+
+  var b_min = +999999;
+  var b_max = -999999;
+
+  var x_min, y_min, x_max, y_max;
+
+  for (var x = 0; x < pole_border_temp.length; x++) {
+      var plus = pole_border_temp[x][0] + pole_border_temp[x][1];
+
+      if (plus < b_min) {
+          b_min = plus;
+          x_min = pole_border_temp[x][0];
+          y_min = pole_border_temp[x][1];
+      }
+
+      if (plus > b_max) {
+          b_max = plus;
+          x_max = pole_border_temp[x][0];
+          y_max = pole_border_temp[x][1];
+      }
+  }
+
+  pole_border.push(x_min, y_min);
+  pole_border.push(x_max, y_max);
+  // console.log(x_min, y_min, x_max, y_max);
+
+  console.log("end preratanie Border");
+}
+
+
+function resizeToCanvasCoordinates(i,os){
+  var rovnica = (max_x - min_x)/(max_y - min_y);
+  if(rovnica == 1){
+      if(os == "x"){
+        return 800 * (i - min_x)/(max_x - min_x);
+      }
+      return  800 * (i - min_y)/(max_y - min_y);
+
+  }
+  else if(rovnica > 1){
+      if(os == "x"){
+        return 800 * (i - min_x)/(max_x - min_x);
+      }
+      return 800 * (i - min_y)/(max_x - min_x);
+  }
+  else{
+    if(os == "x"){
+      return  800 * (i - min_x)/(max_y - min_y);
+    }
+    return  800 * (i - min_y)/(max_y - min_y);
+  }
 }
 
 
