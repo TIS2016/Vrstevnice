@@ -35,6 +35,7 @@ function makeMaps(){
 	make2dMap();
   makeBorder();
 	//add render and download button
+  $("#kresli").prop('disabled', true);
  	$("#download").prop('disabled', false);
   $("#render").prop('disabled', false);
 }

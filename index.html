@@ -16,10 +16,15 @@
 	<div class="col-xs-12 menu">
 		<div class="row">
 
+<<<<<<< HEAD
       <div class="col-xs-12 text-center" id="alert_place" style="min-height: 50px; line-height: 50px;">
 
         <span id="status_text"><i class="fa fa-check" id="status"></i> Aplikácia Pripravená</span>
 
+=======
+    <div class="col-xs-12 text-center" id="alert_place" style="min-height: 50px; line-height: 50px;">
+        <span id="status_text"><i class="fa fa-check" id="status"></i> Aplikácia Pripravená</span>
+>>>>>>> origin/master
       </div>
 
 			<div class="col-xs-12">
@@ -74,13 +79,20 @@
 </body>
 
 <script type="text/javascript">
+<<<<<<< HEAD
   $("#file").change(function(){
     var filename = $('input[type=file]').val().split('\\').pop();
     $("#file_path").append( "<p>" + filename + "</p>" );
 
     $("#status_text").html("<i class='fa fa-refresh fa-spin'></i> Načítavam súbor");
+=======
+$("#file").change(function(){
+  var filename = $('input[type=file]').val().split('\\').pop();
+  $("#file_path").text( filename );
+  $("#status_text").html("<i class='fa fa-refresh fa-spin'></i> Načítavam súbor");
+>>>>>>> origin/master
 
-  });
+ });
 </script>
 <script type="text/javascript" src="assets/js/Three.js"></script>
 <script type="text/javascript" src="assets/js/ShaderTerrain.js"></script>
