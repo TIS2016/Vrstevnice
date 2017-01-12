@@ -27,6 +27,9 @@ class XMLCoordsParser{
         $xpath = new DOMXPath($doc);
 
         $result_contour = $xpath->query("//symbols");
+        if ($result_contour->length === 0) {
+          throw new Exception("Chýbajúce základné symboly!");
+        }
 
         $contour;
         $index_contour;
@@ -48,7 +51,9 @@ class XMLCoordsParser{
 
         //get all part objects and for each check if the boolean representation of its roatation attribute value is equal to 0 (false), which means it doesn't contain that attribute.
         $result = $xpath->query("//parts/part/objects/object[boolean(@rotation)=0 and (@symbol=".$contour." or @symbol=".$index_contour.")]/coords");
-
+        if ($result->length === 0) {
+                  throw new Exception("V súbore sa nenachádzajú Vrstevnice!");
+                }
         $allParts = array();
 
         // Vrstevnice
@@ -83,7 +88,9 @@ class XMLCoordsParser{
         // Oramovanie
 
         $result_border = $xpath->query("//parts/part/objects/object[boolean(@rotation)=0 and @symbol=".$line."]/coords");
-
+        if ($result_border->length === 0) {
+                  throw new Exception("V súbore sa nenachádza ohraničenie!");
+                }
         $border = array();
 
         for($i = 0; $i < $result_border->length; $i++){
@@ -118,5 +125,11 @@ class XMLCoordsParser{
 }
 
 libxml_use_internal_errors(true);
-echo json_encode((new XMLCoordsParser())->parse($_FILES['file']['tmp_name']));
+try {
+  echo json_encode((new XMLCoordsParser())->parse($_FILES['file']['tmp_name']));
+} catch (Exception $e) {
+  header('HTTP/1.1 400 Bad Request');
+ header('Content-type: text/plain');
+ exit($e->getMessage());
+}
 ?>
