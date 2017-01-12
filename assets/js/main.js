@@ -19,6 +19,12 @@ function makeMaps(){
 	//Automatically starts after processing the input files.
 	//Portray 2D map and heightmaps
 	// rovnica = (max_x - min_x)/(max_y - min_y);
+
+  BorderCoords = [];
+  data = [];
+  OpenCurves = [];
+  ClosedCurves = [];
+
   makeCanvasCoordinates();
 
   cleanArrayFromEmptyArrays();

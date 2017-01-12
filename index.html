@@ -34,8 +34,8 @@
 
           </div>
 
-          <div class="col-xs-4" id="file_path">
-
+          <div class="col-xs-4">
+              <p id="file_path"></p>
           </div>
 
           <div class="col-xs-4">
@@ -77,7 +77,7 @@
 
   $("#file").change(function(){
     var filename = $('input[type=file]').val().split('\\').pop();
-    $("#file_path").append( "<p>" + filename + "</p>" );
+    $("#file_path").text( filename );
 
     $("#status_text").html("<i class='fa fa-refresh fa-spin'></i> Načítavam súbor");
 
