@@ -76,7 +76,7 @@ document.getElementById('file').onchange = function(){
   formData.append('file', $('#file')[0].files[0]);
 
   $.ajax({
-         url : 'assets/ajax/parser.php',
+         url : '/assets/ajax/parser.php',
          type : 'POST',
          data : formData,
          processData: false,  // tell jQuery not to process the data
