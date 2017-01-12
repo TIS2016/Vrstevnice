@@ -288,22 +288,205 @@ function curvesJoinStarts(){
 
 }
 
+function smallestIndexInArray(array) {
+
+  var index = 0;
+  var value = array[0];
+
+  for (var i = 1; i < array.length; i++) {
+    if (array[i] < value) {
+      value = array[i];
+      index = i;
+    }
+  }
+
+  return index;
+
+}
+
+function pullTo(axes, priznak) {
+
+  if (priznak == "start") {
+    switch (axes) {
+      case "x1":
+        OpenCurves[0][0][0][0] = BorderCoords[0];
+        break;
+      case "y1":
+        OpenCurves[0][0][0][1] = BorderCoords[1];
+        break;
+      case "x2":
+        OpenCurves[0][0][0][0] = BorderCoords[2];
+        break;
+      case "y2":
+        OpenCurves[0][0][0][1] = BorderCoords[3];
+        break;
+    }
+  }else{
+    switch (axes) {
+      case "x1":
+        OpenCurves[0][OpenCurves[0].length - 1][3][0] = BorderCoords[0];
+        break;
+      case "y1":
+        OpenCurves[0][OpenCurves[0].length - 1][3][1] = BorderCoords[1];
+        break;
+      case "x2":
+        OpenCurves[0][OpenCurves[0].length - 1][3][0] = BorderCoords[2];
+        break;
+      case "y2":
+        OpenCurves[0][OpenCurves[0].length - 1][3][1] = BorderCoords[3];
+        break;
+    }
+  }
+
+}
+
+function closestToBorder(x, y, priznak){
+
+  var border_x1 = BorderCoords[0];
+  var border_y1 = BorderCoords[1];
+  var border_x2 = BorderCoords[2];
+  var border_y2 = BorderCoords[3];
+
+  var diff_x1 = Math.abs(x - border_x1);
+  var diff_x2 = Math.abs(x - border_x2);
+
+  var diff_y1 = Math.abs(y - border_y1);
+  var diff_y2 = Math.abs(y - border_y2);
+
+  var array = [diff_x1, diff_x2, diff_y1, diff_y2];
+
+  switch(smallestIndexInArray(array)) {
+    case 0:
+        pullTo("x1", priznak);
+        break;
+    case 1:
+        pullTo("y1", priznak);
+        break;
+    case 2:
+        pullTo("x2", priznak);
+        break;
+    case 3:
+        pullTo("y2", priznak);
+        break;
+  }
+
+}
+
+function pullToBorder(priznak) {
+
+  if (priznak == "start") {
+
+    var start_x = OpenCurves[0][0][0][0];
+    var start_y = OpenCurves[0][0][0][0];
+
+    closestToBorder(start_x, start_y, "start");
+
+  }else{
+
+    var end_x = OpenCurves[0][OpenCurves[0].length - 1][3][0];
+    var end_y = OpenCurves[0][OpenCurves[0].length - 1][3][1];
+
+    closestToBorder(end_x, end_y, "end");
+
+  }
+
+}
+
+function beyondOn(x, y, priznak) {
+
+  var border_x1 = BorderCoords[0];
+  var border_y1 = BorderCoords[1];
+  var border_x2 = BorderCoords[2];
+  var border_y2 = BorderCoords[3];
+
+  if (x <= border_x1) {
+    pullTo("x1", priznak);
+  }else if (x >= border_x2) {
+    pullTo("x2", priznak);
+  }else if (y <= border_y1) {
+    pullTo("y1", priznak);
+  }else if (y >= border_y2) {
+    pullTo("y2", priznak);
+  }
+
+}
+
+function cutOnBorder(priznak) {
+
+  if (priznak == "start") {
+
+    var start_x = OpenCurves[0][0][0][0];
+    var start_y = OpenCurves[0][0][0][0];
+
+    beyondOn(start_x, start_y, priznak);
+  }else{
+
+    var end_x = OpenCurves[0][OpenCurves[0].length - 1][3][0];
+    var end_y = OpenCurves[0][OpenCurves[0].length - 1][3][1];
+
+    beyondOn(end_x, end_y, priznak);
+
+  }
+
+}
+
+function connectContour(){
+
+  var dlzka = OpenCurves[0].length - 1;
+
+  var end_x = OpenCurves[0][dlzka][3][0];
+  var end_y = OpenCurves[0][dlzka][3][1];
+
+  OpenCurves[0][0][0][0] = end_x;
+  OpenCurves[0][0][0][1] = end_y;
+
+  ClosedCurves.push(OpenCurves[0]);
+  OpenCurves.splice(0, 1);
+
+}
+
 function curvesJoinBorders() {
 
   while (OpenCurves.length !== 0) {
 
-      var dlzka = OpenCurves[0].length - 1;
+    var dlzka = OpenCurves[0].length - 1;
 
-      var end_x = OpenCurves[0][dlzka][3][0];
-      var end_y = OpenCurves[0][dlzka][3][1];
+    var start_x = OpenCurves[0][0][0][0];
+    var start_y = OpenCurves[0][0][0][0];
 
-      OpenCurves[0][0][0][0] = end_x;
-      OpenCurves[0][0][0][1] = end_y;
+    var end_x = OpenCurves[0][dlzka][3][0];
+    var end_y = OpenCurves[0][dlzka][3][1];
 
-      ClosedCurves.push(OpenCurves[0]);
-      OpenCurves.splice(0, 1);
+    if (!beyondBorder(start_x, start_y)) { // Pokial to nie je za okrajom musime to tam dotiahnut
+      pullToBorder("start");
+    }else{ // Je za borderom = Odstrihnut vsetko za
+      cutOnBorder("start");
+    }
+
+    if (!beyondBorder(end_x, end_y)) { // Pokial to nie je za okrajom musime to tam dotiahnut
+      pullToBorder("end");
+    }else{ // Je za borderom = Odstrihnut vsetko za
+      cutOnBorder("end");
+    }
+
+    connectContour();
 
   }
+
+  // while (OpenCurves.length !== 0) {
+  //
+  //     var dlzka = OpenCurves[0].length - 1;
+  //
+  //     var end_x = OpenCurves[0][dlzka][3][0];
+  //     var end_y = OpenCurves[0][dlzka][3][1];
+  //
+  //     OpenCurves[0][0][0][0] = end_x;
+  //     OpenCurves[0][0][0][1] = end_y;
+  //
+  //     ClosedCurves.push(OpenCurves[0]);
+  //     OpenCurves.splice(0, 1);
+  //
+  // }
 
 }
 
