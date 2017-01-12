@@ -22,12 +22,12 @@ var CONS = {
 
 
     var n = 0;
-   
+
 
     // Wait until everything is loaded before continuing
     function loaded() {
         n++;
-        console.log("loaded: " + n);
+        // console.log("loaded: " + n);
 
         if (n >= 3) {
             terrain.visible = true;
@@ -36,6 +36,14 @@ var CONS = {
     }
 
     function initMap() {
+      $("#alert_place").append("<div class='alert alert-info text-center' id='alert_message5' role='alert'>Načítavam 3D Mapu</div>");
+
+      window.setTimeout(function() {
+        $("#alert_message5").fadeTo(500, 0).slideUp(500, function(){
+          $(this).remove();
+        });
+      }, 3000);
+
 
         // setup default three.js stuff
         renderer = new THREE.WebGLRenderer();
@@ -130,6 +138,13 @@ var CONS = {
 
         // tell everything is ready
         loaded();
+        $("#alert_place").append("<div class='alert alert-info text-center' id='alert_message6' role='alert'>Koniec načítavania 3D Mapy</div>");
+
+        window.setTimeout(function() {
+          $("#alert_message6").fadeTo(500, 0).slideUp(500, function(){
+            $(this).remove();
+          });
+        }, 3000);
     }
 
 //    // render the scene
