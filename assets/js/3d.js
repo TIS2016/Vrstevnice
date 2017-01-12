@@ -36,13 +36,7 @@ var CONS = {
     }
 
     function initMap() {
-      $("#alert_place").append("<div class='alert alert-info text-center' id='alert_message5' role='alert'>Načítavam 3D Mapu</div>");
-
-      window.setTimeout(function() {
-        $("#alert_message5").fadeTo(500, 0).slideUp(500, function(){
-          $(this).remove();
-        });
-      }, 3000);
+  $("#status_text").html("<i class='fa fa-refresh fa-spin'></i> Načítavam 3D Mapu");
 
 
         // setup default three.js stuff
@@ -138,13 +132,7 @@ var CONS = {
 
         // tell everything is ready
         loaded();
-        $("#alert_place").append("<div class='alert alert-info text-center' id='alert_message6' role='alert'>Koniec načítavania 3D Mapy</div>");
-
-        window.setTimeout(function() {
-          $("#alert_message6").fadeTo(500, 0).slideUp(500, function(){
-            $(this).remove();
-          });
-        }, 3000);
+      $("#status_text").html("<i class='fa fa-check'></i> 3D Mapa načítaná");
     }
 
 //    // render the scene

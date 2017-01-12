@@ -2,11 +2,15 @@ class Parser{
   constructor(file) { //v lines je vystup z AJAX-> parser.php
 		this.file = file;
     pole_border_temp = [];
-    BorderCoords = [];
 	}
 
 	rozprasovanie(){
     data_coordinates = [[[]]];
+
+    max_x = -9999999;
+    max_y = -9999999;
+    min_x = +9999999;
+    min_y = +9999999;
 
 		var temp_j;
 		var pole_bezier;
@@ -33,19 +37,16 @@ class Parser{
 
     // console.log("start parse Border");
 
+    pole_border_temp = [];
+
     for (var m = 0; m < this.file[1][0].coords.length; m++) {
       pole_border_temp.push([this.file[1][0].coords[m].x, this.file[1][0].coords[m].y]);
     }
     // console.log(this.file[1][0].coords.length);
 
-    // console.log("end parse Border");
-    $("#alert_place").append("<div class='alert alert-info text-center' id='alert_message2' role='alert'>Dokončil som načítavanie súboru</div>");
+    $("#status_text").html("<i class='fa fa-check'></i> Súbor načítaný");
 
-    window.setTimeout(function() {
-      $("#alert_message2").fadeTo(500, 0).slideUp(500, function(){
-        $(this).remove();
-      });
-    }, 3000);
+    // console.log("end parse Border");
 
     $("#kresli").prop('disabled', false);
 	}
@@ -84,6 +85,10 @@ document.getElementById('file').onchange = function(){
              subor = jQuery.parseJSON(data);
              parser = new Parser(subor);
              parser.rozprasovanie();
-         }
+         },
+         error : function (jqXHR, exception) {
+           $("#status_text").html("<i class='fa fa-close'></i> " + jqXHR.responseText + "");
+           $("#status_text").css("color", "#e01814");
+        }
   });
 };
