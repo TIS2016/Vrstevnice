@@ -2,11 +2,15 @@ class Parser{
   constructor(file) { //v lines je vystup z AJAX-> parser.php
 		this.file = file;
     pole_border_temp = [];
-    BorderCoords = [];
 	}
 
 	rozprasovanie(){
     data_coordinates = [[[]]];
+
+    max_x = -9999999;
+    max_y = -9999999;
+    min_x = +9999999;
+    min_y = +9999999;
 
 		var temp_j;
 		var pole_bezier;
@@ -33,13 +37,16 @@ class Parser{
 
     // console.log("start parse Border");
 
+    pole_border_temp = [];
+
     for (var m = 0; m < this.file[1][0].coords.length; m++) {
       pole_border_temp.push([this.file[1][0].coords[m].x, this.file[1][0].coords[m].y]);
     }
     // console.log(this.file[1][0].coords.length);
 
-    // console.log("end parse Border");
     $("#status_text").html("<i class='fa fa-check'></i> Súbor načítaný");
+
+    // console.log("end parse Border");
 
     $("#kresli").prop('disabled', false);
 	}
@@ -69,7 +76,7 @@ document.getElementById('file').onchange = function(){
   formData.append('file', $('#file')[0].files[0]);
 
   $.ajax({
-         url : 'assets/ajax/parser.php',
+         url : '/assets/ajax/parser.php',
          type : 'POST',
          data : formData,
          processData: false,  // tell jQuery not to process the data
