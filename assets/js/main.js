@@ -510,13 +510,7 @@ function makeBorder(){
 }
 
 function makeCanvasCoordinates(){
-  $("#alert_place").append("<div class='alert alert-info text-center' id='alert_message3' role='alert'>Prerátavam Vrstevnice</div>");
-
-  window.setTimeout(function() {
-    $("#alert_message3").fadeTo(500, 0).slideUp(500, function(){
-      $(this).remove();
-    });
-  }, 3000);
+  $("#status_text").html("<i class='fa fa-refresh fa-spin'></i> Prerátavam Vrstevnice");
   // console.log("start preratanie Vrstevnic");
 
   for (var i = 0; i < data_coordinates.length; i++) {
@@ -562,13 +556,7 @@ function makeCanvasCoordinates(){
   BorderCoords.push(x_max, y_max);
 
   // console.log("end preratanie Border");
-  $("#alert_place").append("<div class='alert alert-info text-center' id='alert_message4' role='alert'>Koniec prerátavania Vrstevníc</div>");
-
-  window.setTimeout(function() {
-    $("#alert_message4").fadeTo(500, 0).slideUp(500, function(){
-      $(this).remove();
-    });
-  }, 3000);
+  $("#status_text").html("<i class='fa fa-check'></i> Vrstevnice prerátané");
 }
 
 

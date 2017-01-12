@@ -38,14 +38,9 @@ class Parser{
     }
     // console.log(this.file[1][0].coords.length);
 
-    // console.log("end parse Border");
-    $("#alert_place").append("<div class='alert alert-info text-center' id='alert_message2' role='alert'>Dokončil som načítavanie súboru</div>");
+    $("#status_text").html("<i class='fa fa-check'></i> Súbor načítaný");
 
-    window.setTimeout(function() {
-      $("#alert_message2").fadeTo(500, 0).slideUp(500, function(){
-        $(this).remove();
-      });
-    }, 3000);
+    // console.log("end parse Border");
 
     $("#kresli").prop('disabled', false);
 	}
@@ -75,7 +70,7 @@ document.getElementById('file').onchange = function(){
   formData.append('file', $('#file')[0].files[0]);
 
   $.ajax({
-         url : '/assets/ajax/parser.php',
+         url : 'assets/ajax/parser.php',
          type : 'POST',
          data : formData,
          processData: false,  // tell jQuery not to process the data
