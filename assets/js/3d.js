@@ -36,8 +36,7 @@ var CONS = {
     }
 
     function initMap() {
-  $("#status_text").html("<i class='fa fa-refresh fa-spin'></i> Načítavam 3D Mapu");
-
+        $("#status_text").html("<i class='fa fa-refresh fa-spin'></i> Načítavam 3D Mapu");
 
         // setup default three.js stuff
         renderer = new THREE.WebGLRenderer();
@@ -132,7 +131,7 @@ var CONS = {
 
         // tell everything is ready
         loaded();
-      $("#status_text").html("<i class='fa fa-check'></i> 3D Mapa načítaná");
+        $("#status_text").html("<i class='fa fa-check'></i> 3D Mapa načítaná");
     }
 
 //    // render the scene
