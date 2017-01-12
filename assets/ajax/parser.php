@@ -26,8 +26,28 @@ class XMLCoordsParser{
 
         $xpath = new DOMXPath($doc);
 
+        $result_contour = $xpath->query("//symbols");
+
+        $contour;
+        $index_contour;
+        $line;
+
+        for ($i=0; $i < $result_contour->length; $i++) {
+            $coordsNodeList = $xpath->query("./symbol", $result_contour->item($i));
+            for ($j=0; $j < $coordsNodeList->length; $j++) {
+              $coordNodeAttributes = $coordsNodeList->item($j)->attributes;
+              if($coordNodeAttributes->getNamedItem("code")->nodeValue == "101.0"){
+                  $contour = $coordNodeAttributes->getNamedItem("id")->nodeValue;
+              }elseif ($coordNodeAttributes->getNamedItem("code")->nodeValue == "102.0") {
+                  $index_contour = $coordNodeAttributes->getNamedItem("id")->nodeValue;
+              }elseif ($coordNodeAttributes->getNamedItem("code")->nodeValue == "704.0") {
+                  $line = $coordNodeAttributes->getNamedItem("id")->nodeValue;
+              }
+            }
+        }
+
         //get all part objects and for each check if the boolean representation of its roatation attribute value is equal to 0 (false), which means it doesn't contain that attribute.
-        $result = $xpath->query("//parts/part/objects/object[boolean(@rotation)=0 and (@symbol=157 or @symbol=158 or @symbol=0 or @symbol=1)]/coords");
+        $result = $xpath->query("//parts/part/objects/object[boolean(@rotation)=0 and (@symbol=".$contour." or @symbol=".$index_contour.")]/coords");
 
         $allParts = array();
 
@@ -62,7 +82,7 @@ class XMLCoordsParser{
 
         // Oramovanie
 
-        $result_border = $xpath->query("//parts/part/objects/object[boolean(@rotation)=0 and @symbol=132]/coords");
+        $result_border = $xpath->query("//parts/part/objects/object[boolean(@rotation)=0 and @symbol=".$line."]/coords");
 
         $border = array();
 

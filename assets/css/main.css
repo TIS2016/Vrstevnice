@@ -4,12 +4,12 @@
 }
 #main_map{
   border:2px solid black;
-  height:800px;
-  width:800px;
+  height:1024px;
+  width:1024px;
 }
 #map_2d{
-	height:800px;
-	width:800px;
+	height:1024px;
+	width:1024px;
 }
 #heightmap{
 	display: none;

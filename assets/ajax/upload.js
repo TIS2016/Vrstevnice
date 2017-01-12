@@ -2,7 +2,7 @@ class Parser{
   constructor(file) { //v lines je vystup z AJAX-> parser.php
 		this.file = file;
     pole_border_temp = [];
-    pole_border = [];
+    BorderCoords = [];
 	}
 
 	rozprasovanie(){
@@ -29,16 +29,25 @@ class Parser{
 			data_coordinates.push(pole_vrstevnica);
 		}
 		data_coordinates = data_coordinates.splice(1,data_coordinates.length);
-    console.log("end parse Vrstevnice");
+    // console.log("end parse Vrstevnice");
 
-    console.log("start parse Border");
+    // console.log("start parse Border");
 
     for (var m = 0; m < this.file[1][0].coords.length; m++) {
       pole_border_temp.push([this.file[1][0].coords[m].x, this.file[1][0].coords[m].y]);
     }
     // console.log(this.file[1][0].coords.length);
 
-    console.log("end parse Border");
+    // console.log("end parse Border");
+    $("#alert_place").append("<div class='alert alert-info text-center' id='alert_message2' role='alert'>Dokončil som načítavanie súboru</div>");
+
+    window.setTimeout(function() {
+      $("#alert_message2").fadeTo(500, 0).slideUp(500, function(){
+        $(this).remove();
+      });
+    }, 3000);
+
+    $("#kresli").prop('disabled', false);
 	}
 
 minmax(x, y) {
@@ -61,7 +70,7 @@ minmax(x, y) {
 
 
 document.getElementById('file').onchange = function(){
-  console.log('start load file');
+  // console.log('start load file');
   var formData = new FormData();
   formData.append('file', $('#file')[0].files[0]);
 
