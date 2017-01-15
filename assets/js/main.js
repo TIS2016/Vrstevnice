@@ -35,12 +35,21 @@ function makeMaps(){
 
   curvesJoinEnds();
 
- curvesJoinBorders();
+  curvesJoinStarts();
 
-	
+  curvesJoinEnds();
+
+  pullToBorders();
+
+ // curvesJoinBorders();
+
+
 	make2dMap();
+
+  make2dMapOpen();
+  make2dDots();
   makeBorder();
-	
+
 	makeHeightMap();
 	makeImgHeightmap();
 	//add render and download button
@@ -59,6 +68,29 @@ function cleanArrayFromEmptyArrays() {
 
 }
 
+function pullToBorders(){
+
+  var change = true;
+
+  while(change){
+    change = false;
+
+    for (var i = 0; i < OpenCurves.length; i++) {
+
+      var dlzka = OpenCurves[i].length - 1;
+
+      var start_x = OpenCurves[i][0][0][0];
+      var start_y = OpenCurves[i][0][0][1];
+
+      var end_x = OpenCurves[i][dlzka][3][0];
+      var end_y = OpenCurves[i][dlzka][3][1];
+    }
+
+
+  }
+
+}
+
 function curvesJoinEnds() {
 
   var change = true;
@@ -73,6 +105,7 @@ function curvesJoinEnds() {
     var piznak; // Priznak pridavania pola podla start / end
 
     for (var i = 0; i < OpenCurves.length; i++) {
+      change = false;
       min_vzdialenost = +999999;
       index = i;
       dlzka = OpenCurves[i].length - 1;
@@ -98,6 +131,7 @@ function curvesJoinEnds() {
               min_vzdialenost = vzdialenost;
               min_index = j;
               priznak = "same";
+              // change = true;
             } // End vzdialenost compare
 
           }  // End beyondBorder compare
@@ -118,7 +152,8 @@ function curvesJoinEnds() {
             if(vzdialenost < min_vzdialenost){
               min_vzdialenost = vzdialenost;
               min_index = j;
-              priznak = "end";
+              priznak = "start";
+              // change = true;
             } // End vzdialenost compare
 
           } // End beyondBorder compare
@@ -130,7 +165,8 @@ function curvesJoinEnds() {
             if(vzdialenost < min_vzdialenost){
               min_vzdialenost = vzdialenost;
               min_index = j;
-              priznak = "start";
+              priznak = "end";
+              // change = true;
             } // End vzdialenost compare
 
           } // End beyondBorder compare
@@ -138,6 +174,7 @@ function curvesJoinEnds() {
         } // Koniec elsu - Ina Vrstevnica
 
       } // Koniec for-cyklu druheho prechadzania
+      // if (change) {
 
       if (priznak == "same") {
         OpenCurves[i][0][0][0] = end_x;
@@ -149,7 +186,7 @@ function curvesJoinEnds() {
       }else{
 
         if (priznak == "start") {
-          connectArrays(index, min_index, "start");
+          connectArraysEnds(index, min_index, "start");
 
           if (isCurveClosed(OpenCurves.length - 1)) {
             ClosedCurves.push(OpenCurves[OpenCurves.length - 1]);
@@ -157,7 +194,7 @@ function curvesJoinEnds() {
             change = true;
           }
         }else{ // priznak = end
-          connectArrays(index, min_index, "end");
+          connectArraysEnds(index, min_index, "end");
           // ("priznak end");
 
           if (isCurveClosed(OpenCurves.length - 1)) {
@@ -168,6 +205,7 @@ function curvesJoinEnds() {
         }
 
       }
+    // }
 
     } // Koniec for-cyklu prveho prechadzania
   stop++;
@@ -180,7 +218,6 @@ function curvesJoinStarts(){
   var change = true;
   while (change) {
     change = false;
-    (stop);
 
     var index; // Index Vrstevnice v data_coordinates
     var dlzka; // Dlzka daneho pola Vrstevnice
@@ -190,6 +227,7 @@ function curvesJoinStarts(){
     var piznak; // Priznak pridavania pola podla start / end
 
     for (var i = 0; i < OpenCurves.length; i++) {
+      change = false;
       min_vzdialenost = +999999;
       index = i;
       dlzka = OpenCurves[i].length - 1;
@@ -521,20 +559,20 @@ function pointsBeyondBorder(priznak){
 
   }else
   {
-		
+
     for (var j = OpenCurves[0].length -1; j >= 0; j--) {
       start_x = OpenCurves[0][j][0][0];
       start_y = OpenCurves[0][j][0][1];
       end_x = OpenCurves[0][j][3][0];
       end_y = OpenCurves[0][j][3][1];
-			
+
       if (!beyondBorder(start_x, start_y) && !beyondBorder(end_x, end_y)) {
 				console.log('index by mal byt',j);
         return(j);
       }
 
     }
-		
+
 
   }
 
@@ -579,21 +617,21 @@ function connectContour(){
 
   var end_x = OpenCurves[0][dlzka][3][0];
   var end_y = OpenCurves[0][dlzka][3][1];
-	
+
 	var x1 = OpenCurves[0][0][0][0];
 	var y1 = OpenCurves[0][0][0][1];
-	
+
 	var x2 = OpenCurves[0][0][0][0];
 	var y2 = OpenCurves[0][0][0][1];
-	
+
 	var x3 = end_x;
 	var y3 = end_y;
-	
+
 	var x4 = end_x;
 	var y4 = end_y;
-	
+
 	var vrst = [ [x3, y3], [x4, y4], [x1, y1], [x2, y2]];
-	
+
 	OpenCurves[0].push(vrst);
 
   ClosedCurves.push(OpenCurves[0]);
@@ -620,7 +658,7 @@ function curvesJoinBorders() {
     if (!beyondBorder(end_x, end_y)) { // Pokial to nie je za okrajom musime to tam dotiahnut
       pullToBorder("end");
     }
-		
+
 
     connectContour();
 
@@ -658,6 +696,109 @@ function reverseArray(array) {
   }
 
   return returnArray;
+
+}
+
+function connectArraysEnds(index, min_index, priznak){
+
+  var connectedArray, novaVrstevnica;
+
+  var dlzka_index = OpenCurves[index].length - 1;
+  var dlzka_min_index = OpenCurves[min_index].length - 1;
+
+  var x1, y1, x2, y2;
+
+  if (priznak == "start") {
+
+    x1 = OpenCurves[index][dlzka_index][3][0];
+    y1 = OpenCurves[index][dlzka_index][3][1];
+
+    x2 = OpenCurves[min_index][0][0][0];
+    x2 = OpenCurves[min_index][0][0][1];
+
+    novaVrstevnica = [[x1, y1], [x1, y1], [x2, y2], [x2, y2]];
+
+    OpenCurves[index].push(novaVrstevnica);
+
+    connectedArray = OpenCurves[index].concat(OpenCurves[min_index]);
+
+  }else {
+
+    x1 = OpenCurves[index][dlzka_index][3][0];
+    y1 = OpenCurves[index][dlzka_index][3][1];
+
+    x2 = OpenCurves[min_index][dlzka_min_index][3][0];
+    y2 = OpenCurves[min_index][dlzka_min_index][3][1];
+
+    novaVrstevnica = [[x1, y1], [x1, y1], [x2, y2], [x2, y2]];
+
+    var flippedArray = reverseArray(OpenCurves[min_index]);
+    OpenCurves[index].push(novaVrstevnica);
+
+    connectedArray = OpenCurves[index].concat(flippedArray);
+  }
+
+  OpenCurves.splice(index, 1);
+
+  if (min_index > index) {
+    OpenCurves.splice(min_index - 1, 1);
+  }else{
+    OpenCurves.splice(min_index, 1);
+  }
+
+  OpenCurves.push(connectedArray);
+
+}
+
+function connectArraysStarts(index, min_index, priznak) {
+
+  var connectedArray, novaVrstevnica;
+
+  var dlzka_index = OpenCurves[index].length - 1;
+  var dlzka_min_index = OpenCurves[min_index].length - 1;
+
+  var x1, y1, x2, y2;
+
+  if (priznak == "start") {
+
+    x1 = OpenCurves[min_index][0][0][0];
+    y1 = OpenCurves[min_index][0][0][1];
+
+    x2 = OpenCurves[index][0][0][0];
+    y2 = OpenCurves[index][0][0][1];
+
+    novaVrstevnica = [[x1, y1], [x1, y1], [x2, y2], [x2, y2]];
+
+    var flippedArray = reverseArray(OpenCurves[min_index]);
+    flippedArray.push(novaVrstevnica);
+
+    connectedArray = flippedArray.concat(OpenCurves[index]);
+
+  }else{
+
+    x1 = OpenCurves[min_index][dlzka_min_index][3][0];
+    y1 = OpenCurves[min_index][dlzka_min_index][3][1];
+
+    x2 = OpenCurves[index][0][0][0];
+    y2 = OpenCurves[index][0][0][1];
+
+    novaVrstevnica = [[x1, y1], [x1, y1], [x2, y2], [x2, y2]];
+
+    OpenCurves[min_index].push(novaVrstevnica);
+
+    connectedArray = OpenCurves[min_index].concat(OpenCurves[index]);
+
+  }
+
+  OpenCurves.splice(index, 1);
+
+  if (min_index > index) {
+    OpenCurves.splice(min_index - 1, 1);
+  }else{
+    OpenCurves.splice(min_index, 1);
+  }
+
+  OpenCurves.push(connectedArray);
 
 }
 
@@ -753,11 +894,11 @@ function makeImgHeightmap(){
      newImg.height = 301 * (BorderCoords[3]/BorderCoords[2])
      newImg.width = 301;
    }
-  else{  
+  else{
     newImg.width = 301 * (BorderCoords[2]/BorderCoords[3]);
     newImg.height = 301;
-  }  
-   document.body.appendChild(newImg);   
+  }
+   document.body.appendChild(newImg);
 }
 
 function makeHeightMap(){
@@ -798,7 +939,7 @@ function makeHeightMap(){
 			else{
 				console.log("chyba pri vykreslovani"); //If the object has an unexpected number of vertices
 				console.log(i,n);
-			}			
+			}
 		}
 
 		//filter for more realistic view
@@ -813,6 +954,69 @@ function makeHeightMap(){
 	canvas_heigtmap.filter = "blur(0px)";
 	//Data for screenshot and for rendering 3D
 	img = heightmap.toDataURL("image/png");
+}
+
+function make2dDots() {
+
+  var map_2d = document.getElementById("map_2d");
+  var canvas = map_2d.getContext("2d");
+
+  canvas.lineWidth = 1;
+
+  for (var i = 0; i < OpenCurves.length; i++) {
+    var start_x = OpenCurves[i][0][0][0];
+    var start_y = OpenCurves[i][0][0][1];
+
+    var end_x = OpenCurves[i][OpenCurves[i].length - 1][3][0];
+    var end_y = OpenCurves[i][OpenCurves[i].length - 1][3][1];
+
+    canvas.strokeStyle = "ff0000";
+    canvas.beginPath();
+    canvas.arc(start_x, start_y, 10, 0, 2 * Math.PI);
+    canvas.stroke();
+
+    canvas.strokeStyle = "#00ff00";
+    canvas.beginPath();
+    canvas.arc(end_x, end_y, 5, 0, 2 * Math.PI);
+    canvas.stroke();
+
+  }
+
+}
+
+function make2dMapOpen(){
+
+  var map_2d = document.getElementById("map_2d");
+	var canvas = map_2d.getContext("2d");
+
+  canvas.lineWidth = 1;
+
+  let vr1, vr2, vr3, vr4;
+	for (i = 0;  i < OpenCurves.length; i++) {
+    canvas.strokeStyle = "#"+((1<<24)*Math.random()|0).toString(16);
+		for(n = 0; n < OpenCurves[i].length; n++){
+			if(OpenCurves[i][n].length == 4){
+				vr1 = OpenCurves[i][n][0];
+				vr2 = OpenCurves[i][n][1];
+				vr3 = OpenCurves[i][n][2];
+				vr4 = OpenCurves[i][n][3];
+				if(n === 0){
+					canvas.moveTo(vr1[0], vr1[1]);
+					canvas.bezierCurveTo(vr2[0] , vr2[1], vr3[0], vr3[1], vr4[0], vr4[1]);
+				}
+				else{
+					canvas.bezierCurveTo(vr2[0] , vr2[1], vr3[0], vr3[1], vr4[0], vr4[1]);
+				}
+			}
+			else{
+				console.log("chyba pri vykreslovani");
+				console.log(i,n);
+			}
+		}
+
+		canvas.stroke();
+	}
+
 }
 
 function make2dMap(){
