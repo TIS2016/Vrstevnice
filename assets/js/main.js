@@ -19,6 +19,12 @@ function makeMaps(){
 	//Automatically starts after processing the input files.
 	//Portray 2D map and heightmaps
 	// rovnica = (max_x - min_x)/(max_y - min_y);
+
+  BorderCoords = [];
+  data = [];
+  OpenCurves = [];
+  ClosedCurves = [];
+
   makeCanvasCoordinates();
 
   cleanArrayFromEmptyArrays();
@@ -29,11 +35,14 @@ function makeMaps(){
 
   curvesJoinEnds();
 
-  curvesJoinBorders();
+ curvesJoinBorders();
 
-	makeHeightMap();
+	
 	make2dMap();
   makeBorder();
+	
+	makeHeightMap();
+	makeImgHeightmap();
 	//add render and download button
   $("#kresli").prop('disabled', true);
  	$("#download").prop('disabled', false);
@@ -282,22 +291,355 @@ function curvesJoinStarts(){
 
 }
 
+function smallestIndexInArray(array) {
+
+  var index = 0;
+  var value = array[0];
+
+  for (var i = 1; i < array.length; i++) {
+    if (array[i] < value) {
+      value = array[i];
+      index = i;
+    }
+  }
+
+  return index;
+
+}
+
+function pullTo(axes, priznak) {
+
+  if (priznak == "start") {
+    switch (axes) {
+      case "x1":
+        OpenCurves[0][0][0][0] = BorderCoords[0];
+        break;
+      case "y1":
+        OpenCurves[0][0][0][1] = BorderCoords[1];
+        break;
+      case "x2":
+        OpenCurves[0][0][0][0] = BorderCoords[2];
+        break;
+      case "y2":
+        OpenCurves[0][0][0][1] = BorderCoords[3];
+        break;
+    }
+  }else{
+    switch (axes) {
+      case "x1":
+        OpenCurves[0][OpenCurves[0].length - 1][3][0] = BorderCoords[0];
+        break;
+      case "y1":
+        OpenCurves[0][OpenCurves[0].length - 1][3][1] = BorderCoords[1];
+        break;
+      case "x2":
+        OpenCurves[0][OpenCurves[0].length - 1][3][0] = BorderCoords[2];
+        break;
+      case "y2":
+        OpenCurves[0][OpenCurves[0].length - 1][3][1] = BorderCoords[3];
+        break;
+    }
+  }
+
+}
+
+function closestToBorder2(x, y, priznak){
+
+  var border_x1 = BorderCoords[0];
+  var border_y1 = BorderCoords[1];
+  var border_x2 = BorderCoords[2];
+  var border_y2 = BorderCoords[3];
+
+  var diff_x1 = Math.abs(x - border_x1);
+  var diff_x2 = Math.abs(x - border_x2);
+
+  var diff_y1 = Math.abs(y - border_y1);
+  var diff_y2 = Math.abs(y - border_y2);
+
+  var array = [diff_x1, diff_x2, diff_y1, diff_y2];
+
+  switch(smallestIndexInArray(array)) {
+    case 0:
+        pullTo("x1", priznak);
+        break;
+    case 1:
+        pullTo("y1", priznak);
+        break;
+    case 2:
+        pullTo("x2", priznak);
+        break;
+    case 3:
+        pullTo("y2", priznak);
+        break;
+  }
+
+}
+
+function closestToBorder(x, y, priznak){
+
+  var border_x1 = BorderCoords[0];
+  var border_y1 = BorderCoords[1];
+  var border_x2 = BorderCoords[2];
+  var border_y2 = BorderCoords[3];
+
+  var diff_x1 = Math.abs(x - border_x1);
+  var diff_x2 = Math.abs(x - border_x2);
+
+  var diff_y1 = Math.abs(y - border_y1);
+  var diff_y2 = Math.abs(y - border_y2);
+
+  var array = [diff_x1, diff_x2, diff_y1, diff_y2];
+
+  switch(smallestIndexInArray(array)) {
+    case 0:
+        return("x", border_x1);
+    case 1:
+        return("y", border_y1);
+    case 2:
+        return("x", border_x2);
+    case 3:
+        return("y", border_y2);
+  }
+
+}
+
+function pullToBorder(priznak) {
+	console.log("som v pullto Border")
+
+  var returnArray, returnAxis, returnPoint;
+  var x1, y1, x2, y2, x3, y3, x4, y4;
+  var newBezier;
+
+  if (priznak == "start") {
+
+    var start_x = OpenCurves[0][0][0][0];
+    var start_y = OpenCurves[0][0][0][0];
+
+    returnArray = closestToBorder(start_x, start_y); // returns axis "x"/"y" and point of this axis
+    returnAxis = returnArray[0];
+    returnPoint = returnArray[1];
+
+    x1 = start_x;
+    y1 = start_y;
+
+    x2 = start_x;
+    y2 = start_y;
+
+    if (returnAxis == "x") {
+      x3 = returnPoint;
+      y3 = start_y;
+
+      x4 = returnPoint;
+      y4 = start_y;
+    }else{
+      x3 = start_x;
+      y3 = returnPoint;
+
+      x4 = start_x;
+      y4 = returnPoint;
+    }
+
+    newBezier = [[x4, y4], [x3, y3], [x2, y2], [x1, y1]];
+    OpenCurves[0].unshift(newBezier);
+
+  }else{
+
+    var end_x = OpenCurves[0][OpenCurves[0].length - 1][3][0];
+    var end_y = OpenCurves[0][OpenCurves[0].length - 1][3][1];
+
+    returnArray = closestToBorder(end_x, end_y); // returns axis "x"/"y" and point of this axis
+    returnAxis = returnArray[0];
+    returnPoint = returnArray[1];
+
+    // New Bezier Curve
+    x1 = end_x;
+    y1 = end_y;
+
+    x2 = end_x;
+    y2 = end_y;
+
+    if (returnAxis == "x") {
+      x3 = returnPoint;
+      y3 = end_y;
+
+      x4 = returnPoint;
+      y4 = end_y;
+    }else{
+      x3 = end_x;
+      y3 = returnPoint;
+
+      x4 = end_x;
+      y4 = returnPoint;
+    }
+
+    newBezier = [[x1, y1], [x2, y2], [x3, y3], [x4, y4]];
+
+    OpenCurves[0].push(newBezier);
+
+    // New Bezier Curve
+  }
+
+}
+
+function beyondOn(x, y, priznak) {
+
+  var border_x1 = BorderCoords[0];
+  var border_y1 = BorderCoords[1];
+  var border_x2 = BorderCoords[2];
+  var border_y2 = BorderCoords[3];
+
+  if (x <= border_x1) {
+    pullTo("x1", priznak);
+  }else if (x >= border_x2) {
+    pullTo("x2", priznak);
+  }else if (y <= border_y1) {
+    pullTo("y1", priznak);
+  }else if (y >= border_y2) {
+    pullTo("y2", priznak);
+  }
+
+}
+
+function pointsBeyondBorder(priznak){
+
+  var start_x, start_y, end_x, end_y, index;
+
+  if (priznak == "start")
+  {
+
+    for (var i = 0; i < OpenCurves[0].length; i++) {
+      start_x = OpenCurves[0][i][0][0];
+      start_y = OpenCurves[0][i][0][1];
+      end_x = OpenCurves[0][i][3][0];
+      end_y = OpenCurves[0][i][3][1];
+
+      if (!beyondBorder(start_x, start_y) && !beyondBorder(end_x, end_y)) {
+        return(i);
+      }
+
+    }
+
+  }else
+  {
+		
+    for (var j = OpenCurves[0].length -1; j >= 0; j--) {
+      start_x = OpenCurves[0][j][0][0];
+      start_y = OpenCurves[0][j][0][1];
+      end_x = OpenCurves[0][j][3][0];
+      end_y = OpenCurves[0][j][3][1];
+			
+      if (!beyondBorder(start_x, start_y) && !beyondBorder(end_x, end_y)) {
+				console.log('index by mal byt',j);
+        return(j);
+      }
+
+    }
+		
+
+  }
+
+}
+
+function cutOnBorder(priznak) {
+
+  var index;
+
+  if (priznak == "start") {
+
+    var start_x = OpenCurves[0][0][0][0];
+    var start_y = OpenCurves[0][0][0][0];
+
+    index = pointsBeyondBorder("start"); // Najde kolko prvkov pola je za ohranicenim a vrati index takeho co uz nie je
+    console.log(OpenCurves[0]);
+		OpenCurves[0].splice(0, index); // Odreze prvky za ohranicenim
+		console.log(index);
+		console.log(OpenCurves[0]);
+    pullToBorder("start");
+    // beyondOn(start_x, start_y, priznak);
+
+  }else{
+
+    var end_x = OpenCurves[0][OpenCurves[0].length - 1][3][0];
+    var end_y = OpenCurves[0][OpenCurves[0].length - 1][3][1];
+
+    index = pointsBeyondBorder("end"); // Najde kolko prvkov pola je za ohranicenim a vrati index takeho co uz nie je
+		console.log("za point beyount border")
+    OpenCurves[0].splice(index + 1, OpenCurves[0].length - (index + 1)); // Odreze prvky za ohranicenim
+
+    pullToBorder("start");
+    // beyondOn(end_x, end_y, priznak);
+
+  }
+
+}
+
+function connectContour(){
+
+  var dlzka = OpenCurves[0].length - 1;
+
+  var end_x = OpenCurves[0][dlzka][3][0];
+  var end_y = OpenCurves[0][dlzka][3][1];
+	
+	var x1 = OpenCurves[0][0][0][0];
+	var y1 = OpenCurves[0][0][0][1];
+	
+	var x2 = OpenCurves[0][0][0][0];
+	var y2 = OpenCurves[0][0][0][1];
+	
+	var x3 = end_x;
+	var y3 = end_y;
+	
+	var x4 = end_x;
+	var y4 = end_y;
+	
+	var vrst = [ [x3, y3], [x4, y4], [x1, y1], [x2, y2]];
+	
+	OpenCurves[0].push(vrst);
+
+  ClosedCurves.push(OpenCurves[0]);
+  OpenCurves.splice(0, 1);
+
+}
+
 function curvesJoinBorders() {
 
   while (OpenCurves.length !== 0) {
 
-      var dlzka = OpenCurves[0].length - 1;
+    var dlzka = OpenCurves[0].length -1;
 
-      var end_x = OpenCurves[0][dlzka][3][0];
-      var end_y = OpenCurves[0][dlzka][3][1];
+    var start_x = OpenCurves[0][0][0][0];
+    var start_y = OpenCurves[0][0][0][0];
 
-      OpenCurves[0][0][0][0] = end_x;
-      OpenCurves[0][0][0][1] = end_y;
+    var end_x = OpenCurves[0][dlzka][3][0];
+    var end_y = OpenCurves[0][dlzka][3][1];
 
-      ClosedCurves.push(OpenCurves[0]);
-      OpenCurves.splice(0, 1);
+    if (!beyondBorder(start_x, start_y)) { // Pokial to nie je za okrajom musime to tam dotiahnut
+      pullToBorder("start");
+    }
+
+    if (!beyondBorder(end_x, end_y)) { // Pokial to nie je za okrajom musime to tam dotiahnut
+      pullToBorder("end");
+    }
+		
+
+    connectContour();
 
   }
+
+  // while (OpenCurves.length !== 0) {
+  //
+  //     var dlzka = OpenCurves[0].length - 1;
+  //
+  //     var end_x = OpenCurves[0][dlzka][3][0];
+  //     var end_y = OpenCurves[0][dlzka][3][1];
+  //
+  //     OpenCurves[0][0][0][0] = end_x;
+  //     OpenCurves[0][0][0][1] = end_y;
+  //
+  //     ClosedCurves.push(OpenCurves[0]);
+  //     OpenCurves.splice(0, 1);
+  //
+  // }
 
 }
 
@@ -403,6 +745,21 @@ function findOpenCurves(){
 
 }
 
+function makeImgHeightmap(){
+	 var newImg = document.createElement("img"); // create img tag
+   newImg.src = heightmap.toDataURL();
+   newImg.id = 'heightmapImg';
+   if(BorderCoords[2] > BorderCoords[3]){
+     newImg.height = 301 * (BorderCoords[3]/BorderCoords[2])
+     newImg.width = 301;
+   }
+  else{  
+    newImg.width = 301 * (BorderCoords[2]/BorderCoords[3]);
+    newImg.height = 301;
+  }  
+   document.body.appendChild(newImg);   
+}
+
 function makeHeightMap(){
 	//make hidden Heightmap in canvas in index.html for rendering 3Dmodel
 
@@ -441,7 +798,7 @@ function makeHeightMap(){
 			else{
 				console.log("chyba pri vykreslovani"); //If the object has an unexpected number of vertices
 				console.log(i,n);
-			}
+			}			
 		}
 
 		//filter for more realistic view
@@ -466,6 +823,8 @@ function make2dMap(){
 	var canvas_map = map_2d.getContext("2d");
 	//Clear all objects from previous rendering
 	canvas_map.clearRect(0, 0, map_2d.width, map_2d.height);
+  canvas_map.strokeStyle="#654321";
+  canvas_map.lineWidth = 1;
 	//before start resize canvas
 	resizeCanvas2d();
 	//Start process and render data
@@ -491,8 +850,6 @@ function make2dMap(){
 			}
 		}
 
-    canvas_map.strokeStyle="#654321";
-    canvas_map.lineWidth = 1;
 		canvas_map.stroke();
 	}
 
@@ -586,8 +943,8 @@ function resizeToCanvasCoordinates(i,os){
 
 
 function resizeCanvasHeightmap(){
-  heightmap.width = size;
-	heightmap.height = size;
+  heightmap.width = BorderCoords[2];
+	heightmap.height = BorderCoords[3];
 }
 
 function resizeCanvas2d(){
