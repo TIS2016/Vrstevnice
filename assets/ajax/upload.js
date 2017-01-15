@@ -73,8 +73,7 @@ minmax(x, y) {
 document.getElementById('file').onchange = function(){
   // console.log('start load file');
   var formData = new FormData();
-  formData.append('file', $('#file')[0].files[0]);
-
+  formData.append('file', $('#file')[0].files[0]);  
   $.ajax({
          url : 'assets/ajax/parser.php',
          type : 'POST',
@@ -87,6 +86,7 @@ document.getElementById('file').onchange = function(){
              parser.rozprasovanie();
          },
          error : function (jqXHR, exception) {
+          console.log("nepreslo");
            $("#status_text").html("<i class='fa fa-close'></i> " + jqXHR.responseText + "");
            $("#status_text").css("color", "#e01814");
         }

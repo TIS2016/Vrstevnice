@@ -35,11 +35,14 @@ function makeMaps(){
 
   curvesJoinEnds();
 
-  curvesJoinBorders();
+ curvesJoinBorders();
 
-	makeHeightMap();
+	
 	make2dMap();
   makeBorder();
+	
+	makeHeightMap();
+	makeImgHeightmap();
 	//add render and download button
   $("#kresli").prop('disabled', true);
  	$("#download").prop('disabled', false);
@@ -401,6 +404,7 @@ function closestToBorder(x, y, priznak){
 }
 
 function pullToBorder(priznak) {
+	console.log("som v pullto Border")
 
   var returnArray, returnAxis, returnPoint;
   var x1, y1, x2, y2, x3, y3, x4, y4;
@@ -517,18 +521,20 @@ function pointsBeyondBorder(priznak){
 
   }else
   {
-
-    for (var j = OpenCurves[0].length; j >= 0; j--) {
+		
+    for (var j = OpenCurves[0].length -1; j >= 0; j--) {
       start_x = OpenCurves[0][j][0][0];
       start_y = OpenCurves[0][j][0][1];
       end_x = OpenCurves[0][j][3][0];
       end_y = OpenCurves[0][j][3][1];
-
+			
       if (!beyondBorder(start_x, start_y) && !beyondBorder(end_x, end_y)) {
+				console.log('index by mal byt',j);
         return(j);
       }
 
     }
+		
 
   }
 
@@ -544,8 +550,10 @@ function cutOnBorder(priznak) {
     var start_y = OpenCurves[0][0][0][0];
 
     index = pointsBeyondBorder("start"); // Najde kolko prvkov pola je za ohranicenim a vrati index takeho co uz nie je
-    OpenCurves[0].splice(0, index); // Odreze prvky za ohranicenim
-
+    console.log(OpenCurves[0]);
+		OpenCurves[0].splice(0, index); // Odreze prvky za ohranicenim
+		console.log(index);
+		console.log(OpenCurves[0]);
     pullToBorder("start");
     // beyondOn(start_x, start_y, priznak);
 
@@ -555,6 +563,7 @@ function cutOnBorder(priznak) {
     var end_y = OpenCurves[0][OpenCurves[0].length - 1][3][1];
 
     index = pointsBeyondBorder("end"); // Najde kolko prvkov pola je za ohranicenim a vrati index takeho co uz nie je
+		console.log("za point beyount border")
     OpenCurves[0].splice(index + 1, OpenCurves[0].length - (index + 1)); // Odreze prvky za ohranicenim
 
     pullToBorder("start");
@@ -570,9 +579,22 @@ function connectContour(){
 
   var end_x = OpenCurves[0][dlzka][3][0];
   var end_y = OpenCurves[0][dlzka][3][1];
-
-  OpenCurves[0][0][0][0] = end_x;
-  OpenCurves[0][0][0][1] = end_y;
+	
+	var x1 = OpenCurves[0][0][0][0];
+	var y1 = OpenCurves[0][0][0][1];
+	
+	var x2 = OpenCurves[0][0][0][0];
+	var y2 = OpenCurves[0][0][0][1];
+	
+	var x3 = end_x;
+	var y3 = end_y;
+	
+	var x4 = end_x;
+	var y4 = end_y;
+	
+	var vrst = [ [x3, y3], [x4, y4], [x1, y1], [x2, y2]];
+	
+	OpenCurves[0].push(vrst);
 
   ClosedCurves.push(OpenCurves[0]);
   OpenCurves.splice(0, 1);
@@ -583,7 +605,7 @@ function curvesJoinBorders() {
 
   while (OpenCurves.length !== 0) {
 
-    var dlzka = OpenCurves[0].length - 1;
+    var dlzka = OpenCurves[0].length -1;
 
     var start_x = OpenCurves[0][0][0][0];
     var start_y = OpenCurves[0][0][0][0];
@@ -593,15 +615,12 @@ function curvesJoinBorders() {
 
     if (!beyondBorder(start_x, start_y)) { // Pokial to nie je za okrajom musime to tam dotiahnut
       pullToBorder("start");
-    }else{ // Je za borderom = Odstrihnut vsetko za
-      cutOnBorder("start");
     }
 
     if (!beyondBorder(end_x, end_y)) { // Pokial to nie je za okrajom musime to tam dotiahnut
       pullToBorder("end");
-    }else{ // Je za borderom = Odstrihnut vsetko za
-      cutOnBorder("end");
     }
+		
 
     connectContour();
 
@@ -726,6 +745,21 @@ function findOpenCurves(){
 
 }
 
+function makeImgHeightmap(){
+	 var newImg = document.createElement("img"); // create img tag
+   newImg.src = heightmap.toDataURL();
+   newImg.id = 'heightmapImg';
+   if(BorderCoords[2] > BorderCoords[3]){
+     newImg.height = 301 * (BorderCoords[3]/BorderCoords[2])
+     newImg.width = 301;
+   }
+  else{  
+    newImg.width = 301 * (BorderCoords[2]/BorderCoords[3]);
+    newImg.height = 301;
+  }  
+   document.body.appendChild(newImg);   
+}
+
 function makeHeightMap(){
 	//make hidden Heightmap in canvas in index.html for rendering 3Dmodel
 
@@ -764,7 +798,7 @@ function makeHeightMap(){
 			else{
 				console.log("chyba pri vykreslovani"); //If the object has an unexpected number of vertices
 				console.log(i,n);
-			}
+			}			
 		}
 
 		//filter for more realistic view
@@ -909,8 +943,8 @@ function resizeToCanvasCoordinates(i,os){
 
 
 function resizeCanvasHeightmap(){
-  heightmap.width = size;
-	heightmap.height = size;
+  heightmap.width = BorderCoords[2];
+	heightmap.height = BorderCoords[3];
 }
 
 function resizeCanvas2d(){

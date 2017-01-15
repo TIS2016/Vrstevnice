@@ -18,7 +18,7 @@ class Coord{
 class XMLCoordsParser{
 
     function parse($cesta){
-
+         
         $cesta_suboru = file_get_contents($cesta);
 
         $doc = new DOMDocument();

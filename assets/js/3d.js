@@ -1,151 +1,111 @@
+function addLights() {
+ var ambientLight = new THREE.AmbientLight(0x444444);
+ ambientLight.intensity = 0.0;
+ scene.add(ambientLight);
 
-var CONS = {
-        // THREE.JS CONSTANTS
-        // set the scene size
-        WIDTH:800,
-        HEIGHT:800,
+ var directionalLight = new THREE.DirectionalLight(0xffffff);
 
-        // set some camera attributes
-        VIEW_ANGLE:45,
-        NEAR:0.3,
-        FAR:2000,
+ directionalLight.position.set(900, 400, 0000).normalize();
+ scene.add(directionalLight);
+}
 
-        CAMERA_X:1300,
-        CAMERA_Y:600,
-        CAMERA_Z:800
-    }
+function setupCamera() {
+  camera.position.z = -10;
+  camera.position.y = 952;
+  camera.position.x = 1400;
+  camera.lookAt(new THREE.Vector3(0,0,0));
+}
 
-    var scene = {};
-    var renderer = {};
-    var camera = {};
-    var controls;
+//To get the pixels, draw the image onto a canvas. From the canvas get the Pixel (R,G,B,A)
+function getTerrainPixelData()
+{  
+  var img = document.getElementById("heightmapImg");
+  
+  img.crossOrigin = "Anonymous";
+  var canvas = document.getElementById("rendermap");
 
+  canvas.width = img.width;
+  canvas.height = img.height;
+  console.log(canvas.width,canvas.height)
+  canvas.getContext('2d').drawImage(img, 0, 0, img.width, img.height);
+  //canvas.getContext('2d').drawImage(img, 0, 0, 150, 300);
+  
+  var data = canvas.getContext('2d').getImageData(0,0,img.width,img.height).data;
+   //var data = canvas.getContext('2d').getImageData(0,0,150,300).data;
+  var normPixels = []
+  //console.log( data.length);
 
-    var n = 0;
+  for (var i = 0, n = data.length; i < n; i += 4) {
+    // get the average value of R, G and B.
+    normPixels.push((data[i] + data[i+1] + data[i+2]) / 3);
+  }
 
+  return normPixels;
+}
 
-    // Wait until everything is loaded before continuing
-    function loaded() {
-        n++;
-        // console.log("loaded: " + n);
+function addGround() {
+  var img = document.getElementById("heightmapImg");
+  var numHeightSegmets = img.height;
+  var numWidthSegmets = img.width;
+  console.log("height = ",numHeightSegmets,' width = ',numWidthSegmets);
 
-        if (n >= 3) {
-            terrain.visible = true;
-            render();
-        }
-    }
+  var geometry = new THREE.PlaneGeometry(1200, 2400,img.width -1,img.height -1);
+  var material = new THREE.MeshLambertMaterial({
+    color: 'green',
+    wireframe: false
+  });
 
-    function initMap() {
-        $("#status_text").html("<i class='fa fa-refresh fa-spin'></i> Načítavam 3D Mapu");
+  terrain = getTerrainPixelData();
 
-        // setup default three.js stuff
-        renderer = new THREE.WebGLRenderer();
-        renderer.setSize(CONS.WIDTH, CONS.HEIGHT);
-        renderer.setClearColor(0xc6e2ff);
-        $("#main_map").append(renderer.domElement);
+  // keep in mind, that the plane has more vertices than segments. If there's one segment, there's two vertices, if
+  // there's 10 segments, there's 11 vertices, and so forth.
+  // The simplest is, if like here you have 100 segments, the image to have 101 pixels. You don't have to worry about
+  // "skewing the landscape" then..
 
-        camera = new THREE.PerspectiveCamera(CONS.VIEW_ANGLE, CONS.WIDTH / CONS.HEIGHT, CONS.NEAR, CONS.FAR);
-        scene = new THREE.Scene();
-        scene.add(camera);
+  // to check uncomment the next line, numbers should be equal
+   //console.log("length: " + terrain.length + ", vertices length: " + geometry.vertices.length);
 
-        camera.position.z = CONS.CAMERA_Z;
-        camera.position.x = CONS.CAMERA_X;
-        camera.position.y = CONS.CAMERA_Y;
-        camera.lookAt(scene.position);
+  for (var i = 0, l = geometry.vertices.length; i < l; i++)
+  {
+    var terrainValue = terrain[i] / 255;
+    geometry.vertices[i].z = geometry.vertices[i].z + terrainValue * 500 ;
+  }
 
-        // add a light
-        pointLight = new THREE.PointLight(0xFFFFFF);
-        scene.add(pointLight);
-        pointLight.position.x = 1000;
-        pointLight.position.y = 3000;
-        pointLight.position.z = -1000;
-        pointLight.intensity = 8;
+  geometry.computeFaceNormals();
+  geometry.computeVertexNormals();
 
+  var plane = new THREE.Mesh(geometry, material);
 
-        // load the heightmap we created as a texture
-//     var texture = THREE.ImageUtils.loadTexture('assets/heightmap/SRTM_US_scaled_512.jpg', null, loaded);
-//         var img = $("#heightmap").val;
-        var texture = THREE.ImageUtils.loadTexture(img, null, loaded);
+  plane.position = new THREE.Vector3(0,0,0);
+  // rotate the plane so up is where y is growing..
 
-        // load two other textures we'll use to make the map look more real
-        var detailTexture = THREE.ImageUtils.loadTexture("assets/bg.jpg", null, loaded);
+  var q = new THREE.Quaternion();
+  q.setFromAxisAngle( new THREE.Vector3(-1,0,0), 90 * Math.PI / 180 );
+  plane.quaternion.multiplyQuaternions( q, plane.quaternion );
 
+  scene.add(plane)
+}
 
-        // the following configuration defines how the terrain is rendered
-        var terrainShader = THREE.ShaderTerrain[ "terrain" ];
-        var uniformsTerrain = THREE.UniformsUtils.clone(terrainShader.uniforms);
+function render() {
+  requestAnimationFrame(render);
+  renderer.render(scene, camera);
+}
 
-        // how to treat abd scale the normal texture
-        uniformsTerrain[ "tNormal" ].texture = detailTexture;
-        uniformsTerrain[ "uNormalScale" ].value = 3;
+var scene = new THREE.Scene();
+var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
+var renderer = new THREE.WebGLRenderer();
+var controls = new THREE.OrbitControls( camera, renderer.domElement );
 
-        // the displacement determines the height of a vector, mapped to
-        // the heightmap
-        uniformsTerrain[ "tDisplacement" ].texture = texture;
-        uniformsTerrain[ "uDisplacementScale" ].value = 250;
+setupCamera();
+addLights();
 
-        // the following textures can be use to finetune how
-        // the map is shown. These are good defaults for simple
-        // rendering
-        uniformsTerrain[ "tDiffuse1" ].texture = detailTexture;
-        uniformsTerrain[ "tDetail" ].texture = detailTexture;
-        uniformsTerrain[ "enableDiffuse1" ].value = true;
-        uniformsTerrain[ "enableDiffuse2" ].value = true;
-        uniformsTerrain[ "enableSpecular" ].value = true;
+function start3d(){
+ 
+addGround();
 
-        // diffuse is based on the light reflection
-        uniformsTerrain[ "uDiffuseColor" ].value.setHex(0xcccccc);
-        uniformsTerrain[ "uSpecularColor" ].value.setHex(0x0D8163);
-        // is the base color of the terrain
-        uniformsTerrain[ "uAmbientColor" ].value.setHex(0x0000cc);
+renderer.setSize(1024, 1024);
+document.body.appendChild(renderer.domElement);
 
-        // how shiny is the terrain
-        uniformsTerrain[ "uShininess" ].value = 3;
+render();
 
-        // handles light reflection
-        uniformsTerrain[ "uRepeatOverlay" ].value.set(6, 6);
-
-        // configure the material that reflects our terrain
-        var material = new THREE.ShaderMaterial({
-            uniforms:uniformsTerrain,
-            vertexShader:terrainShader.vertexShader,
-            fragmentShader:terrainShader.fragmentShader,
-            lights:true,
-            fog:false
-        });
-
-        // we use a plain to render as terrain
-        var geometryTerrain = new THREE.PlaneGeometry(800, 800, 256, 256);
-        geometryTerrain.applyMatrix(new THREE.Matrix4().makeRotationX(Math.PI / 2));
-        geometryTerrain.computeFaceNormals();
-        geometryTerrain.computeVertexNormals();
-        geometryTerrain.computeTangents();
-
-        // create a 3D object to add
-        terrain = new THREE.Mesh(geometryTerrain, material);
-        terrain.position.set(0, -125, 0);
-        terrain.rotation.x = -Math.PI / 2;
-
-        // add the terrain
-        scene.add(terrain);
-
-        // tell everything is ready
-        loaded();
-        $("#status_text").html("<i class='fa fa-check'></i> 3D Mapa načítaná");
-    }
-
-//    // render the scene
-//    function render() {
-//        renderer.render(scene, camera);
-//    }
-
-
-    function render() {
-        var timer = Date.now() * 0.0003;
-        camera.position.x = (Math.cos( timer ) *  CONS.CAMERA_X);
-        camera.position.z = (Math.sin( timer ) *  CONS.CAMERA_Z) ;
-        camera.lookAt( scene.position );
-
-        renderer.render( scene, camera );
-        requestAnimationFrame( render );
-    }
+}

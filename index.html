@@ -43,7 +43,7 @@
             <div class="btn-group pull-right" role="group" aria-label="...">
               <button type="button" id="kresli" class="btn btn-success" disabled="disabled" onclick="makeMaps()">Vykresli</button>
               <button type="button" id="download" class="btn btn-default" disabled="disabled" onclick="location.href='\'+img+'\'">Stiahnúť mapu</button>
-              <button type="button" id="render" class="btn btn-info" disabled="disabled" onclick="initMap()">Renderovať</button>
+              <button type="button" id="render" class="btn btn-info" disabled="disabled" onclick="start3d()">Renderovať</button>
             </div>
 
           </div>
@@ -65,12 +65,16 @@
 
 
 	</div>
-	<div class="col-xs-12">
+	<div class=" hide col-xs-12">
 		<!--3d threeJS object-->
-		<div id="main_map">	</div>
-	</div>
+		
+			<canvas  id="rendermap">
+		Your browser does not support the HTML5 canvas tag.</canvas>
+
+	
 </div>
 	</div>
+
 </body>
 
 <script type="text/javascript">
@@ -84,11 +88,11 @@
 
  });
 </script>
-<script type="text/javascript" src="assets/js/Three.js"></script>
-<script type="text/javascript" src="assets/js/ShaderTerrain.js"></script>
 <script type="text/javascript" src="assets/js/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="assets/ajax/upload.js"></script>
 <script type="text/javascript" src="assets/js/main.js"></script>
+<script type="text/javascript" src="assets/js/three.min.js"></script>
+<script type="text/javascript" src="assets/js/OrbitControls.js"></script>
 <script type="text/javascript" src="assets/js/3d.js"></script>
 
 </html>
