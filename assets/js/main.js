@@ -340,7 +340,7 @@ function pullTo(axes, priznak) {
 
 }
 
-function closestToBorder(x, y, priznak){
+function closestToBorder2(x, y, priznak){
 
   var border_x1 = BorderCoords[0];
   var border_y1 = BorderCoords[1];
@@ -372,22 +372,107 @@ function closestToBorder(x, y, priznak){
 
 }
 
+function closestToBorder(x, y, priznak){
+
+  var border_x1 = BorderCoords[0];
+  var border_y1 = BorderCoords[1];
+  var border_x2 = BorderCoords[2];
+  var border_y2 = BorderCoords[3];
+
+  var diff_x1 = Math.abs(x - border_x1);
+  var diff_x2 = Math.abs(x - border_x2);
+
+  var diff_y1 = Math.abs(y - border_y1);
+  var diff_y2 = Math.abs(y - border_y2);
+
+  var array = [diff_x1, diff_x2, diff_y1, diff_y2];
+
+  switch(smallestIndexInArray(array)) {
+    case 0:
+        return("x", border_x1);
+    case 1:
+        return("y", border_y1);
+    case 2:
+        return("x", border_x2);
+    case 3:
+        return("y", border_y2);
+  }
+
+}
+
 function pullToBorder(priznak) {
+
+  var returnArray, returnAxis, returnPoint;
+  var x1, y1, x2, y2, x3, y3, x4, y4;
+  var newBezier;
 
   if (priznak == "start") {
 
     var start_x = OpenCurves[0][0][0][0];
     var start_y = OpenCurves[0][0][0][0];
 
-    closestToBorder(start_x, start_y, "start");
+    returnArray = closestToBorder(start_x, start_y); // returns axis "x"/"y" and point of this axis
+    returnAxis = returnArray[0];
+    returnPoint = returnArray[1];
+
+    x1 = start_x;
+    y1 = start_y;
+
+    x2 = start_x;
+    y2 = start_y;
+
+    if (returnAxis == "x") {
+      x3 = returnPoint;
+      y3 = start_y;
+
+      x4 = returnPoint;
+      y4 = start_y;
+    }else{
+      x3 = start_x;
+      y3 = returnPoint;
+
+      x4 = start_x;
+      y4 = returnPoint;
+    }
+
+    newBezier = [[x4, y4], [x3, y3], [x2, y2], [x1, y1]];
+    OpenCurves[0].unshift(newBezier);
 
   }else{
 
     var end_x = OpenCurves[0][OpenCurves[0].length - 1][3][0];
     var end_y = OpenCurves[0][OpenCurves[0].length - 1][3][1];
 
-    closestToBorder(end_x, end_y, "end");
+    returnArray = closestToBorder(end_x, end_y); // returns axis "x"/"y" and point of this axis
+    returnAxis = returnArray[0];
+    returnPoint = returnArray[1];
 
+    // New Bezier Curve
+    x1 = end_x;
+    y1 = end_y;
+
+    x2 = end_x;
+    y2 = end_y;
+
+    if (returnAxis == "x") {
+      x3 = returnPoint;
+      y3 = end_y;
+
+      x4 = returnPoint;
+      y4 = end_y;
+    }else{
+      x3 = end_x;
+      y3 = returnPoint;
+
+      x4 = end_x;
+      y4 = returnPoint;
+    }
+
+    newBezier = [[x1, y1], [x2, y2], [x3, y3], [x4, y4]];
+
+    OpenCurves[0].push(newBezier);
+
+    // New Bezier Curve
   }
 
 }
@@ -411,20 +496,69 @@ function beyondOn(x, y, priznak) {
 
 }
 
+function pointsBeyondBorder(priznak){
+
+  var start_x, start_y, end_x, end_y, index;
+
+  if (priznak == "start")
+  {
+
+    for (var i = 0; i < OpenCurves[0].length; i++) {
+      start_x = OpenCurves[0][i][0][0];
+      start_y = OpenCurves[0][i][0][1];
+      end_x = OpenCurves[0][i][3][0];
+      end_y = OpenCurves[0][i][3][1];
+
+      if (!beyondBorder(start_x, start_y) && !beyondBorder(end_x, end_y)) {
+        return(i);
+      }
+
+    }
+
+  }else
+  {
+
+    for (var j = OpenCurves[0].length; j >= 0; j--) {
+      start_x = OpenCurves[0][j][0][0];
+      start_y = OpenCurves[0][j][0][1];
+      end_x = OpenCurves[0][j][3][0];
+      end_y = OpenCurves[0][j][3][1];
+
+      if (!beyondBorder(start_x, start_y) && !beyondBorder(end_x, end_y)) {
+        return(j);
+      }
+
+    }
+
+  }
+
+}
+
 function cutOnBorder(priznak) {
+
+  var index;
 
   if (priznak == "start") {
 
     var start_x = OpenCurves[0][0][0][0];
     var start_y = OpenCurves[0][0][0][0];
 
-    beyondOn(start_x, start_y, priznak);
+    index = pointsBeyondBorder("start"); // Najde kolko prvkov pola je za ohranicenim a vrati index takeho co uz nie je
+    OpenCurves[0].splice(0, index); // Odreze prvky za ohranicenim
+
+    pullToBorder("start");
+    // beyondOn(start_x, start_y, priznak);
+
   }else{
 
     var end_x = OpenCurves[0][OpenCurves[0].length - 1][3][0];
     var end_y = OpenCurves[0][OpenCurves[0].length - 1][3][1];
 
-    beyondOn(end_x, end_y, priznak);
+    index = pointsBeyondBorder("end"); // Najde kolko prvkov pola je za ohranicenim a vrati index takeho co uz nie je
+    OpenCurves[0].splice(index + 1, OpenCurves[0].length - (index + 1)); // Odreze prvky za ohranicenim
+
+    pullToBorder("start");
+    // beyondOn(end_x, end_y, priznak);
 
   }
 
@@ -655,6 +789,8 @@ function make2dMap(){
 	var canvas_map = map_2d.getContext("2d");
 	//Clear all objects from previous rendering
 	canvas_map.clearRect(0, 0, map_2d.width, map_2d.height);
+  canvas_map.strokeStyle="#654321";
+  canvas_map.lineWidth = 1;
 	//before start resize canvas
 	resizeCanvas2d();
 	//Start process and render data
@@ -680,8 +816,6 @@ function make2dMap(){
 			}
 		}
 
-    canvas_map.strokeStyle="#654321";
-    canvas_map.lineWidth = 1;
 		canvas_map.stroke();
 	}
 
