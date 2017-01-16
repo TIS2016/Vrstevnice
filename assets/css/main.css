@@ -11,10 +11,17 @@
 	height:1024px;
 	width:1024px;
  }
-/*
+
 #heightmap{
 	display: none;
 }
 #heightmapImg{
 	display:none;
-} */
+}
+#control{
+	display:none;
+}
+canvas {
+	display:block;
+	margin:auto auto;
+}

@@ -68,7 +68,8 @@ function addGround() {
   for (var i = 0, l = geometry.vertices.length; i < l; i++)
   {
     var terrainValue = terrain[i] / 255;
-    geometry.vertices[i].z = geometry.vertices[i].z + terrainValue * 500 ;
+    var heightDifference = $('#heightDifference').val();
+    geometry.vertices[i].z = geometry.vertices[i].z + terrainValue * heightDifference ;
   }
 
   geometry.computeFaceNormals();

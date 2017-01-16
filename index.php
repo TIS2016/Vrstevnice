@@ -27,7 +27,8 @@
         <div class="row">
 
           <div class="col-xs-4">
-
+						<button type="button" id ="options" class="btn btn-info"> Nastavenie </button>
+<!-- 						<button type="button" id ="demo" class="btn btn-info"> Demo </button> -->
             <label class="btn btn-default btn-file">
               Browse <input type="file" name="file" id="file" style="display: none;"></input>
             </label>
@@ -40,7 +41,7 @@
 
           <div class="col-xs-4">
 
-            <div class="btn-group pull-right" role="group" aria-label="...">
+            <div class="btn-group pull-right" role="group" aria-label="...">														
               <button type="button" id="kresli" class="btn btn-success" disabled="disabled" onclick="makeMaps()">Vykresli</button>
               <button type="button" id="download" class="btn btn-default" disabled="disabled" onclick="location.href='\'+img+'\'">Stiahnúť mapu</button>
               <button type="button" id="render" class="btn btn-info" disabled="disabled" onclick="start3d()">Renderovať</button>
@@ -55,12 +56,23 @@
 		</div>
 	</div>
 	<div class="col-xs-12">
-		<!--CANVAS FOR  HEIGHTMAP  -->
- 		<canvas  id="heightmap" style="border:1px solid #d3d3d3;">
-		Your browser does not support the HTML5 canvas tag.</canvas>
+		<div id="control">
+		 <label>Rozostrenie <input class="form-control" type="text" id="blur" value='2' name="blur"> </input>   </label> 
+		 <label>Výškový rozdiel <input class="form-control" type="text" id="heightDifference" value='500' name="heightDifference"> </input>  </label>
+		 <div class="checkbox">
+      <label><input id="chcekHeightmap" type="checkbox" value="">Zobraziť heightmap 1</label>
+    </div>
+		</div>
+	
+	
+		
 
 		<!--CANVAS FOR  HEIGHTMAP  -->
  		<canvas  id="map_2d" style="border:1px solid #d3d3d3;">
+		Your browser does not support the HTML5 canvas tag.</canvas>
+		
+		<!--CANVAS FOR  HEIGHTMAP  -->
+ 		<canvas  id="heightmap" style="border:1px solid #d3d3d3;">
 		Your browser does not support the HTML5 canvas tag.</canvas>
 
 
