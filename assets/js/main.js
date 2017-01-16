@@ -39,15 +39,19 @@ function makeMaps(){
 
   curvesJoinEnds();
 
-  pullToBorders();
+  // pullToBorders();
+
+  // connectBehindBorders();
+
+  connectBehindBorders2();
 
  // curvesJoinBorders();
 
 
 	make2dMap();
 
-  make2dMapOpen();
-  make2dDots();
+  // make2dMapOpen();
+  // make2dDots();
   makeBorder();
 
 	makeHeightMap();
@@ -68,25 +72,438 @@ function cleanArrayFromEmptyArrays() {
 
 }
 
-function pullToBorders(){
+function axisYLower(index){
 
-  var change = true;
+  var dlzka = OpenCurves[index].length - 1;
 
-  while(change){
-    change = false;
+  var start_y = OpenCurves[index][0][0][1];
+  var end_y = OpenCurves[index][dlzka][3][1];
 
-    for (var i = 0; i < OpenCurves.length; i++) {
+  if(start_y < end_y){
+    return "start";
+  }else{
+    return "end";
+  }
 
-      var dlzka = OpenCurves[i].length - 1;
+}
 
-      var start_x = OpenCurves[i][0][0][0];
-      var start_y = OpenCurves[i][0][0][1];
+function connectBehindBorders2() {
 
-      var end_x = OpenCurves[i][dlzka][3][0];
-      var end_y = OpenCurves[i][dlzka][3][1];
+  for (var i = 0; i < OpenCurves.length; i++) {
+
+    var dlzka = OpenCurves[i].length - 1;
+
+    var start_x = OpenCurves[i][0][0][0];
+    var start_y = OpenCurves[i][0][0][1];
+
+    var end_x = OpenCurves[i][dlzka][3][0];
+    var end_y = OpenCurves[i][dlzka][3][1];
+
+    var start_border = closestToBorder2(start_x, start_y);
+    var end_border = closestToBorder2(end_x, end_y);
+
+    var novaVrstevnica1, novaVrstevnica2, novaVrstevnica3;
+    var x1,y1,x2,y2,x3,y3,x4,y4;
+
+    if(start_border == end_border) {
+
+      x1 = end_x;
+      y1 = end_y;
+
+      x2 = start_x;
+      y2 = start_y;
+
+      novaVrstevnica1 = [[x1, y1], [x1, y1], [x2, y2], [x2, y2]];
+
+      OpenCurves[i].push(novaVrstevnica1);
+
+      ClosedCurves.push(OpenCurves[i]);
+
+    }else if (start_border == "x2" && end_border == "x1") {
+
+      x1 = end_x;
+      y1 = end_y;
+
+      x2 = BorderCoords[0];
+      y2 = BorderCoords[1];
+
+      novaVrstevnica1 = [[x1, y1], [x1, y1], [x2, y2], [x2, y2]];
+
+      x3 = BorderCoords[2];
+      y3 = BorderCoords[1];
+
+      novaVrstevnica2 = [[x2, y2], [x2, y2], [x3, y3], [x3, y3]];
+
+      x4 = start_x;
+      y4 = start_y;
+
+      novaVrstevnica3 = [[x3, y3], [x3, y3], [x4, y4], [x4, y4]];
+
+      OpenCurves[i].push(novaVrstevnica1);
+      OpenCurves[i].push(novaVrstevnica2);
+      OpenCurves[i].push(novaVrstevnica3);
+
+      ClosedCurves.push(OpenCurves[i]);
+
+    }else if (start_border == "x1" && end_border == "x2") {
+
+      x1 = end_x;
+      y1 = end_y;
+
+      x2 = BorderCoords[2];
+      y2 = BorderCoords[1];
+
+      novaVrstevnica1 = [[x1, y1], [x1, y1], [x2, y2], [x2, y2]];
+
+      x3 = BorderCoords[0];
+      y3 = BorderCoords[1];
+
+      novaVrstevnica2 = [[x2, y2], [x2, y2], [x3, y3], [x3, y3]];
+
+      x4 = start_x;
+      y4 = start_y;
+
+      novaVrstevnica3 = [[x3, y3], [x3, y3], [x4, y4], [x4, y4]];
+
+      OpenCurves[i].push(novaVrstevnica1);
+      OpenCurves[i].push(novaVrstevnica2);
+      OpenCurves[i].push(novaVrstevnica3);
+
+      ClosedCurves.push(OpenCurves[i]);
+
+    }else if (start_border == "y2" && end_border == "y1") {
+
+      x1 = end_x;
+      y1 = end_y;
+
+      x2 = BorderCoords[0];
+      y2 = BorderCoords[1];
+
+      novaVrstevnica1 = [[x1, y1], [x1, y1], [x2, y2], [x2, y2]];
+
+      x3 = BorderCoords[0];
+      y3 = BorderCoords[2];
+
+      novaVrstevnica2 = [[x2, y2], [x2, y2], [x3, y3], [x3, y3]];
+
+      x4 = start_x;
+      y4 = start_y;
+
+      novaVrstevnica3 = [[x3, y3], [x3, y3], [x4, y4], [x4, y4]];
+
+      OpenCurves[i].push(novaVrstevnica1);
+      OpenCurves[i].push(novaVrstevnica2);
+      OpenCurves[i].push(novaVrstevnica3);
+
+      ClosedCurves.push(OpenCurves[i]);
+
+    }else if (start_border == "y1" && end_border == "y2") {
+
+      x1 = end_x;
+      y1 = end_y;
+
+      x2 = BorderCoords[2];
+      y2 = BorderCoords[3];
+
+      novaVrstevnica1 = [[x1, y1], [x1, y1], [x2, y2], [x2, y2]];
+
+      x3 = BorderCoords[2];
+      y3 = BorderCoords[1];
+
+      novaVrstevnica2 = [[x2, y2], [x2, y2], [x3, y3], [x3, y3]];
+
+      x4 = start_x;
+      y4 = start_y;
+
+      novaVrstevnica3 = [[x3, y3], [x3, y3], [x4, y4], [x4, y4]];
+
+      OpenCurves[i].push(novaVrstevnica1);
+      OpenCurves[i].push(novaVrstevnica2);
+      OpenCurves[i].push(novaVrstevnica3);
+
+      ClosedCurves.push(OpenCurves[i]);
+
+    }else if ((start_border == "x1" && end_border == "y1") || (end_border == "x1" && start_border == "y1")) {
+
+      x1 = end_x;
+      y1 = end_y;
+
+      x2 = BorderCoords[0];
+      y2 = BorderCoords[1];
+
+      novaVrstevnica1 = [[x1, y1], [x1, y1], [x2, y2], [x2, y2]];
+
+      x3 = start_x;
+      y3 = start_y;
+
+      novaVrstevnica2 = [[x2, y2], [x2, y2], [x3, y3], [x3, y3]];
+
+      OpenCurves[i].push(novaVrstevnica1);
+      OpenCurves[i].push(novaVrstevnica2);
+
+      ClosedCurves.push(OpenCurves[i]);
+
+    }else if ((start_border == "x1" && end_border == "y2") || (end_border == "x1" && start_border == "y2")) {
+
+      x1 = end_x;
+      y1 = end_y;
+
+      x2 = BorderCoords[0];
+      y2 = BorderCoords[3];
+
+      novaVrstevnica1 = [[x1, y1], [x1, y1], [x2, y2], [x2, y2]];
+
+      x3 = start_x;
+      y3 = start_y;
+
+      novaVrstevnica2 = [[x2, y2], [x2, y2], [x3, y3], [x3, y3]];
+
+      OpenCurves[i].push(novaVrstevnica1);
+      OpenCurves[i].push(novaVrstevnica2);
+
+      ClosedCurves.push(OpenCurves[i]);
+
+    }else if ((start_border == "x2" && end_border == "y1") || (end_border == "x2" && start_border == "y1")) {
+
+      x1 = end_x;
+      y1 = end_y;
+
+      x2 = BorderCoords[2];
+      y2 = BorderCoords[1];
+
+      novaVrstevnica1 = [[x1, y1], [x1, y1], [x2, y2], [x2, y2]];
+
+      x3 = start_x;
+      y3 = start_y;
+
+      novaVrstevnica2 = [[x2, y2], [x2, y2], [x3, y3], [x3, y3]];
+
+      OpenCurves[i].push(novaVrstevnica1);
+      OpenCurves[i].push(novaVrstevnica2);
+
+      ClosedCurves.push(OpenCurves[i]);
+
+    }else if ((start_border == "x2" && end_border == "y2") || (end_border == "x2" && start_border == "y2")) {
+
+      x1 = end_x;
+      y1 = end_y;
+
+      x2 = BorderCoords[2];
+      y2 = BorderCoords[3];
+
+      novaVrstevnica1 = [[x1, y1], [x1, y1], [x2, y2], [x2, y2]];
+
+      x3 = start_x;
+      y3 = start_y;
+
+      novaVrstevnica2 = [[x2, y2], [x2, y2], [x3, y3], [x3, y3]];
+
+      OpenCurves[i].push(novaVrstevnica1);
+      OpenCurves[i].push(novaVrstevnica2);
+
+      ClosedCurves.push(OpenCurves[i]);
+
     }
 
+  }
 
+}
+
+function connectBehindBorders(){
+
+  for (var i = 0; i < OpenCurves.length; i++) {
+
+    var dlzka = OpenCurves[i].length - 1;
+
+    var start_x = OpenCurves[i][0][0][0];
+    var start_y = OpenCurves[i][0][0][1];
+
+    var end_x = OpenCurves[i][dlzka][3][0];
+    var end_y = OpenCurves[i][dlzka][3][1];
+
+    var novaVrstevnica1, novaVrstevnica2;
+    var x1,y1,x2,y2;
+    var x3,y3,x4,y4;
+
+    if(end_y < start_y){
+
+      x1 = end_x;
+      y1 = end_y;
+
+      x2 = end_x;
+      y2 = start_y;
+
+      novaVrstevnica1 = [[x1, y1], [x1, y1], [x2, y2], [x2, y2]];
+
+      x3 = end_x;
+      y3 = start_y;
+
+      x4 = start_x;
+      y4 = start_y;
+
+      novaVrstevnica2 = [[x3, y3], [x3, y3], [x4, y4], [x4, y4]];
+
+    }else{
+
+      x1 = end_x;
+      y1 = end_y;
+
+      x2 = end_x;
+      y2 = start_y;
+
+      novaVrstevnica1 = [[x1, y1], [x1, y1], [x2, y2], [x2, y2]];
+
+      x3 = end_x;
+      y3 = start_y;
+
+      x4 = start_x;
+      y4 = start_y;
+
+      novaVrstevnica2 = [[x3, y3], [x3, y3], [x4, y4], [x4, y4]];
+
+    }
+
+    OpenCurves[i].push(novaVrstevnica1);
+    OpenCurves[i].push(novaVrstevnica2);
+
+    ClosedCurves.push(OpenCurves[i]);
+
+  }
+
+}
+
+function pullToBorders(){
+
+  var border_axis;
+
+  for (var i = 0; i < OpenCurves.length; i++) {
+
+    var dlzka = OpenCurves[i].length - 1;
+
+    var start_x = OpenCurves[i][0][0][0];
+    var start_y = OpenCurves[i][0][0][1];
+
+    var end_x = OpenCurves[i][dlzka][3][0];
+    var end_y = OpenCurves[i][dlzka][3][1];
+
+    if (!beyondBorder(start_x, start_y)) { // Start nie je za borderom
+      border_axis = closestToBorder2(start_x, start_y, "start");
+      pullToAxis(border_axis, i, "start");
+    }
+
+    if (!beyondBorder(end_x, end_y)) { // End nie je za borderom
+      border_axis = closestToBorder2(end_x, end_y, "end");
+      pullToAxis(border_axis, i, "end");
+    }
+
+  }
+
+}
+
+function closestToBorder2(x, y){
+
+  var border_x1 = BorderCoords[0];
+  var border_y1 = BorderCoords[1];
+  var border_x2 = BorderCoords[2];
+  var border_y2 = BorderCoords[3];
+
+  var diff_x1 = Math.abs(x - border_x1);
+  var diff_x2 = Math.abs(x - border_x2);
+
+  var diff_y1 = Math.abs(y - border_y1);
+  var diff_y2 = Math.abs(y - border_y2);
+
+  var array = [diff_x1, diff_x2, diff_y1, diff_y2];
+
+  switch(smallestIndexInArray(array)) {
+    case 0:
+        return("x1");
+    case 1:
+        return("y1");
+    case 2:
+        return("x2");
+    case 3:
+        return("y2");
+  }
+
+}
+
+function pullToAxis(axis, index, priznak) {
+
+  var border, novaVrstevnica;
+  var x,y;
+  var x1,y1,x2,y2;
+
+  if (priznak == "start") {
+
+    x = OpenCurves[index][0][0][0];
+    y = OpenCurves[index][0][0][1];
+
+    switch (axis) {
+      case "x1":
+        border = BorderCoords[0];
+        x1 = border;
+        y1 = y;
+        x2 = x;
+        y2 = y;
+        break;
+      case "y1":
+        border = BorderCoords[1];
+        x1 = x;
+        y1 = border;
+        x2 = x;
+        y2 = y;
+        break;
+      case "x2":
+        border = BorderCoords[2];
+        x1 = x;
+        y1 = border;
+        x2 = x;
+        y2 = y;
+        break;
+      case "y2":
+        border = BorderCoords[3];
+        break;
+    }
+
+  }else{
+
+  }
+
+}
+
+function pullTo(axis, priznak, index) {
+
+  if (priznak == "start") {
+    switch (axes) {
+      case "x1":
+        OpenCurves[0][0][0][0] = BorderCoords[0];
+        break;
+      case "y1":
+        OpenCurves[0][0][0][1] = BorderCoords[1];
+        break;
+      case "x2":
+        OpenCurves[0][0][0][0] = BorderCoords[2];
+        break;
+      case "y2":
+        OpenCurves[0][0][0][1] = BorderCoords[3];
+        break;
+    }
+  }else{
+    switch (axes) {
+      case "x1":
+        OpenCurves[0][OpenCurves[0].length - 1][3][0] = BorderCoords[0];
+        break;
+      case "y1":
+        OpenCurves[0][OpenCurves[0].length - 1][3][1] = BorderCoords[1];
+        break;
+      case "x2":
+        OpenCurves[0][OpenCurves[0].length - 1][3][0] = BorderCoords[2];
+        break;
+      case "y2":
+        OpenCurves[0][OpenCurves[0].length - 1][3][1] = BorderCoords[3];
+        break;
+    }
   }
 
 }
@@ -345,73 +762,73 @@ function smallestIndexInArray(array) {
 
 }
 
-function pullTo(axes, priznak) {
+// function pullTo(axes, priznak) {
+//
+//   if (priznak == "start") {
+//     switch (axes) {
+//       case "x1":
+//         OpenCurves[0][0][0][0] = BorderCoords[0];
+//         break;
+//       case "y1":
+//         OpenCurves[0][0][0][1] = BorderCoords[1];
+//         break;
+//       case "x2":
+//         OpenCurves[0][0][0][0] = BorderCoords[2];
+//         break;
+//       case "y2":
+//         OpenCurves[0][0][0][1] = BorderCoords[3];
+//         break;
+//     }
+//   }else{
+//     switch (axes) {
+//       case "x1":
+//         OpenCurves[0][OpenCurves[0].length - 1][3][0] = BorderCoords[0];
+//         break;
+//       case "y1":
+//         OpenCurves[0][OpenCurves[0].length - 1][3][1] = BorderCoords[1];
+//         break;
+//       case "x2":
+//         OpenCurves[0][OpenCurves[0].length - 1][3][0] = BorderCoords[2];
+//         break;
+//       case "y2":
+//         OpenCurves[0][OpenCurves[0].length - 1][3][1] = BorderCoords[3];
+//         break;
+//     }
+//   }
+//
+// }
 
-  if (priznak == "start") {
-    switch (axes) {
-      case "x1":
-        OpenCurves[0][0][0][0] = BorderCoords[0];
-        break;
-      case "y1":
-        OpenCurves[0][0][0][1] = BorderCoords[1];
-        break;
-      case "x2":
-        OpenCurves[0][0][0][0] = BorderCoords[2];
-        break;
-      case "y2":
-        OpenCurves[0][0][0][1] = BorderCoords[3];
-        break;
-    }
-  }else{
-    switch (axes) {
-      case "x1":
-        OpenCurves[0][OpenCurves[0].length - 1][3][0] = BorderCoords[0];
-        break;
-      case "y1":
-        OpenCurves[0][OpenCurves[0].length - 1][3][1] = BorderCoords[1];
-        break;
-      case "x2":
-        OpenCurves[0][OpenCurves[0].length - 1][3][0] = BorderCoords[2];
-        break;
-      case "y2":
-        OpenCurves[0][OpenCurves[0].length - 1][3][1] = BorderCoords[3];
-        break;
-    }
-  }
-
-}
-
-function closestToBorder2(x, y, priznak){
-
-  var border_x1 = BorderCoords[0];
-  var border_y1 = BorderCoords[1];
-  var border_x2 = BorderCoords[2];
-  var border_y2 = BorderCoords[3];
-
-  var diff_x1 = Math.abs(x - border_x1);
-  var diff_x2 = Math.abs(x - border_x2);
-
-  var diff_y1 = Math.abs(y - border_y1);
-  var diff_y2 = Math.abs(y - border_y2);
-
-  var array = [diff_x1, diff_x2, diff_y1, diff_y2];
-
-  switch(smallestIndexInArray(array)) {
-    case 0:
-        pullTo("x1", priznak);
-        break;
-    case 1:
-        pullTo("y1", priznak);
-        break;
-    case 2:
-        pullTo("x2", priznak);
-        break;
-    case 3:
-        pullTo("y2", priznak);
-        break;
-  }
-
-}
+// function closestToBorder2(x, y, priznak){
+//
+//   var border_x1 = BorderCoords[0];
+//   var border_y1 = BorderCoords[1];
+//   var border_x2 = BorderCoords[2];
+//   var border_y2 = BorderCoords[3];
+//
+//   var diff_x1 = Math.abs(x - border_x1);
+//   var diff_x2 = Math.abs(x - border_x2);
+//
+//   var diff_y1 = Math.abs(y - border_y1);
+//   var diff_y2 = Math.abs(y - border_y2);
+//
+//   var array = [diff_x1, diff_x2, diff_y1, diff_y2];
+//
+//   switch(smallestIndexInArray(array)) {
+//     case 0:
+//         pullTo("x1", priznak);
+//         break;
+//     case 1:
+//         pullTo("y1", priznak);
+//         break;
+//     case 2:
+//         pullTo("x2", priznak);
+//         break;
+//     case 3:
+//         pullTo("y2", priznak);
+//         break;
+//   }
+//
+// }
 
 function closestToBorder(x, y, priznak){
 
@@ -1027,12 +1444,15 @@ function make2dMap(){
 	var canvas_map = map_2d.getContext("2d");
 	//Clear all objects from previous rendering
 	canvas_map.clearRect(0, 0, map_2d.width, map_2d.height);
-  canvas_map.strokeStyle="#654321";
   canvas_map.lineWidth = 1;
 	//before start resize canvas
 	resizeCanvas2d();
 	//Start process and render data
   let vr1, vr2, vr3, vr4;
+  // canvas_map.fillStyle="#654321";
+  canvas_map.strokeStyle="#654321";
+  // canvas_map.fillRect(0, 0, map_2d.width, map_2d.height);
+  // canvas_map.clearRect(BorderCoords[0], BorderCoords[1], BorderCoords[2], BorderCoords[3]);
 	for (i = 0;  i < ClosedCurves.length; i++) {
 		for(n = 0; n < ClosedCurves[i].length; n++){
 			if(ClosedCurves[i][n].length == 4){
