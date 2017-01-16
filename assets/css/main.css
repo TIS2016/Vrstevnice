@@ -18,3 +18,10 @@
 #heightmapImg{
 	display:none;
 }
+#control{
+	display:none;
+}
+canvas {
+	display:block;
+	margin:auto auto;
+}
