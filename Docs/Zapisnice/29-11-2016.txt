@@ -1,0 +1,28 @@
+Zapisnica 29.11.
+
+Stretnutie so zadávate¾om
+
+Prítomní: ...
+
+problém: neuzavreté vrstevnice, krajná vdy nekonèí (stredná musí by vdy uavretá)
+- vnútri chyba
+- okolo vırez krajinky - ten je vdy neuzavrenı
+- mapa vdy obdånik, po obdånik dotiahnutá vrstevnica (bude to stále trocha skreslova)
+- orámovanie obrázka - potia¾ poèíta
+
+nastavovanie intervalov medzi vrstevnicami doplni
+- vymyslie rozumnú interpretáciu vıšky
+
+urobi jamu
+- ešte sme neriešili, vrstevnica, ktorá má èiarky k sebe je jama
+- vymyslí príklady a pošle nám ich
+- nieje moné priamo vo vstupe, keï tak interaktívne vo vıstupe
+
+textúra volite¾ná
+- druicová snímka a tú napasova
+
+- nadmorské vıšky urèené farbami (vrchol kopca biely, akoe sneh) - iba volite¾né, nieje potrebné
+
+ako kamera?
+- z dia¾ky, z lietadla obzrie
+

@@ -1,0 +1,74 @@
+Zápisnica 16.1.17
+
+Zoznam prítomnıch:
+Tomas Boèinec, Patrik Priebera, Matej Vilk
+cvièiaci P.Petroviè
+
+
+Èo sme urobili:
+
+- súhlas od Zadávate¾a p. Baloga
+- Technická dokumentácia
+
+Pripomienky od cvièiaceho:
+
+- Technická dokumentácia (Návrh):
+
+	- upravi šípky V USE CASE 
+	- podrobnejšie popísa POIADAVKY v špecifikácii
+ 
+	- Stavovı diagram - popísa k akej entite je robenı(ku mape), zmeni stavy: je exportovaná, nachádza sa v úloisku 
+
+	- Sekevenènı diagram - urobi celı od znova, actor - pouívate¾
+, správy ktoré si entity posielajú: nie zobrazí trasy ale zobraz trasy
+
+	- Komponentnı diagram - 3D kninica - je externa a jej nazov three.js (do slovníku pojmov)
+	- triedny diagram za analızou technológoií - podstatne metódy maju byt vysvetlené ako fungujú
+	- ESTETIKA: - popisok obrázku
+
+, vdy rovnakı na rovnakom mieste	
+
+- Pouívate¾ské rozhranie:
+	- chybová hláška,vizualizácia mapy súèasou pouzivatelskeho rozhrania
+
+
+	- zrátanie - èudné slovo
+	- Urobi nadpis aplikácie na stránku kde beí
+	- Informaèná hláška hneï na zaèiatku:" vyberte si súbor" napísa do statusbaru 
+	- rovnakı jazyk názvov buttonov (Browse ,Renderova,)
+	- rovno hneï vykresli 2D mapu, bez potreby stláèa "vykresli"
+
+	- premazavanie 3D mapy pri zmenách,
+
+- testovacie scenáre:
+	- Vysledok testovania, samostatne priebeh testovania
+
+
+
+- Popis ku zhodnoteniu:
+	- Èo je implementované z funkcionality základná / rozšírená a.t.ï.
+
+
+	- napísa dva postupy/zásady ako funguje spájanie vrstevníc, zaujímavı algoritmus
+	- popísa postup rozmazavania, algoritmus jak to funguje, 
+
+- Úvod k pouívate¾sej príruèke, dve vety k 3.1 preèo sa to robí, kedy sa to robí, kto to robí, do slovníku pojmov
+
+
+	-pozuvivanie aplikacie - pouzivatelska prirucka - uvod, dva riadky
+
+
+	- popis ku "Stiahnutie mapy"
+
+
+	- ze musi doda oramikované treba dopísa,
+- treba tam napriklad aj to dopisat, ze pri vacsom rozostreni ci ako sa to vola, sa zvysuje mozno realna vykresovost alebo ako to nazvat no takisto sa nam zhorsuje kvalita alebo take nieco	
+	
+Èo máme urobi:
+	- dokonèit dokumentáciu
+	- upravi pouívate¾ské rozhranie
+	- diagramy, sekvenènı, stavovı, triedny
+	- testovanie, priebeh a vısledky
+	- zhodnotenie a popis aplgoritmov
+	- pouívate¾ská príruèka
+	

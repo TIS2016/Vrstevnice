@@ -1,0 +1,63 @@
+﻿Zápisnica 17.1.2017
+
+Zoznam prítomných: Klára Horváthová, Tomáš Bočinec, Patrik Priebera, Matej Vilk
+
+
+Rozdelenie práce:
+
+Klára:
+	-  podrobnejšie popísať POžIADAVKY v špecifikácii
+ 
+	- Stavový diagram - popísať k akej entite je robený(ku mape), zmeniť stavy: je exportovaná, nachádza sa v úložisku 
+
+	- Sekevenčný diagram - urobiť celý od znova, actor - používateľ
+, správy ktoré si entity posielajú: nie zobrazí trasy ale zobraz trasy
+
+	- Komponentný diagram - 3D knižnica - je externa a jej nazov three.js (do slovníku pojmov)
+	- ESTETIKA: - popisok obrázku
+
+, vždy rovnaký na rovnakom mieste
+
+	- celkové hodnotenie tímovej spolupráce
+Paťo:
+	- upraviť šípky V USE CASE
+	- triedny diagram za analýzou technológoií - podstatne metódy maju byt vysvetlené ako fungujú
+	- testovacie scenáre:
+		- Vysledok testovania, samostatne priebeh testovania
+
+
+	- návod na inštaláciu
+Tomáš:	
+	- Úvod k používateľsej príručke, dve vety k 3.1 prečo sa to robí, kedy sa to robí, kto to robí, do slovníku pojmov
+	-používanie aplikacie - pouzivatelska prirucka - uvod, dva riadky
+	- popis ku "Stiahnutie mapy"
+
+
+	- ze musi dodať oramikované treba dopísať,
+	- treba tam napriklad aj to dopisat, ze pri vacsom rozostreni ci ako sa to vola, sa zvysuje mozno realna vykresovost alebo ako to nazvat no takisto sa nam zhorsuje kvalita alebo take nieco
+	- analýza technológií
+	- používateľské rozhranie:
+		- chybová hláška,vizualizácia mapy súčasťou pouzivatelskeho rozhrania
+
+
+		- zrátanie - čudné slovo
+		- Urobiť nadpis aplikácie na stránku kde beží
+		- Informačná hláška hneď na začiatku:" vyberte si súbor" napísať do statusbaru 
+		- rovnaký jazyk názvov buttonov (Browse ,Renderovať,)
+		- rovno hneď vykresliť 2D mapu, bez potreby stláčať "vykresli"
+
+		- premazavanie 3D mapy pri zmenách,
+	-  obrázok s popisom do tech. dokumentácie
+Maťo:
+	- používateľské rozhranie:
+		- chybová hláška,vizualizácia mapy súčasťou pouzivatelskeho rozhrania
+
+
+		- zrátanie - čudné slovo
+		- Urobiť nadpis aplikácie na stránku kde beží
+		- Informačná hláška hneď na začiatku:" vyberte si súbor" napísať do statusbaru 
+		- rovnaký jazyk názvov buttonov (Browse ,Renderovať,)
+		- rovno hneď vykresliť 2D mapu, bez potreby stláčať "vykresli"
+
+		- premazavanie 3D mapy pri zmenách,
+	
