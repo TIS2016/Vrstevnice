@@ -14,6 +14,9 @@ var data = [];
 var OpenCurves = [];
 var ClosedCurves = [];
 
+$('#options').click(function() {
+ $( "#control" ).fadeToggle( "slow", "linear" );
+});
 
 function makeMaps(){
 	//Automatically starts after processing the input files.
@@ -44,6 +47,18 @@ function makeMaps(){
 	make2dMap();
 
   makeBorder();
+
+  if($('#chcekHeightmap').is(":checked")){
+    console.log("show heightmap");
+    $('#heightmap').show();
+  }
+  else{
+    console.log("skryt");
+  }
+
+  var map_2d = document.getElementById("map_2d");
+  var adresa = map_2d.toDataURL();
+  $('#download').attr("onclick","window.open('"+adresa+"')");
 
 	makeHeightMap();
 	makeImgHeightmap();
@@ -721,6 +736,7 @@ function findOpenCurves(){
 }
 
 function makeImgHeightmap(){
+  $('#heightmapImg').remove();
 	 var newImg = document.createElement("img"); // create img tag
    newImg.src = heightmap.toDataURL();
    newImg.id = 'heightmapImg';
@@ -777,11 +793,14 @@ function makeHeightMap(){
 		}
 
 		//filter for more realistic view
-		canvas_heigtmap.filter = "blur(2px)";
+    var blur = $('#blur').val();
+    canvas_heigtmap.filter = "blur("+blur+"px)";
 		canvas_heigtmap.closePath();
 		canvas_heigtmap.lineWidth = 0;
 		color_fill = "rgba(255,255, 255, [[opacity]])";
-		canvas_heigtmap.fillStyle = color_fill.replace("[[opacity]]", "0.1");
+    var opacity = 1.2/ClosedCurves.length;
+    console.log(opacity,"a dlzka = ",ClosedCurves.length);
+    canvas_heigtmap.fillStyle = color_fill.replace("[[opacity]]", opacity);
 		canvas_heigtmap.fill();
 		canvas_heigtmap.stroke();
 	}

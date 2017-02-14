@@ -18,9 +18,9 @@ function setupCamera() {
 
 //To get the pixels, draw the image onto a canvas. From the canvas get the Pixel (R,G,B,A)
 function getTerrainPixelData()
-{  
+{
   var img = document.getElementById("heightmapImg");
-  
+
   img.crossOrigin = "Anonymous";
   var canvas = document.getElementById("rendermap");
 
@@ -29,7 +29,7 @@ function getTerrainPixelData()
   console.log(canvas.width,canvas.height)
   canvas.getContext('2d').drawImage(img, 0, 0, img.width, img.height);
   //canvas.getContext('2d').drawImage(img, 0, 0, 150, 300);
-  
+
   var data = canvas.getContext('2d').getImageData(0,0,img.width,img.height).data;
    //var data = canvas.getContext('2d').getImageData(0,0,150,300).data;
   var normPixels = []
@@ -68,6 +68,7 @@ function addGround() {
   for (var i = 0, l = geometry.vertices.length; i < l; i++)
   {
     var terrainValue = terrain[i] / 255;
+    var heightDifference = $('#heightDifference').val();
     geometry.vertices[i].z = geometry.vertices[i].z + terrainValue * 500 ;
   }
 
@@ -100,7 +101,7 @@ setupCamera();
 addLights();
 
 function start3d(){
- 
+
 addGround();
 
 renderer.setSize(1024, 1024);
