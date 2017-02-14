@@ -35,6 +35,7 @@
 
           <div class="col-xs-4">
 
+            <button type="button" id ="options" class="btn btn-info"> Nastavenia </button>
             <label class="btn btn-default btn-file">
               Prehľadávať <input type="file" name="file" id="file" style="display: none;"></input>
             </label>
@@ -62,6 +63,13 @@
 		</div>
 	</div>
 	<div class="col-xs-12">
+      <div id="control">
+        <label>Rozostrenie <input class="form-control" type="text" id="blur" value='2' name="blur"> </input>   </label>
+        <label>Výškový rozdiel <input class="form-control" type="text" id="heightDifference" value='500' name="heightDifference"> </input>  </label>
+        <div class="checkbox">
+          <label><input id="chcekHeightmap" type="checkbox" value="">Zobraziť heightmap 1</label>
+        </div>
+      </div>
 		<!--CANVAS FOR  HEIGHTMAP  -->
  		<canvas  id="heightmap" style="border:1px solid #d3d3d3;">
 		Your browser does not support the HTML5 canvas tag.</canvas>
