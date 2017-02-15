@@ -9,6 +9,7 @@ cvièiaci P.Petroviè
 
 - súhlas od Zadávate¾a p. Baloga
 - Technická dokumentácia
+- doprogramovnie funkcionalít
 
 Pripomienky od cvièiaceho:
 
@@ -55,7 +56,7 @@ Pripomienky od cvièiaceho:
 - Úvod k používate¾sej príruèke, dve vety k 3.1 preèo sa to robí, kedy sa to robí, kto to robí, do slovníku pojmov
 
 
-	-pozuvivanie aplikacie - pouzivatelska prirucka - uvod, dva riadky
+	-používanie aplikacie - pouzivatelska prirucka - uvod, dva riadky
 
 
 	- popis ku "Stiahnutie mapy"
