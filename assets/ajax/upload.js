@@ -48,7 +48,7 @@ class Parser{
 
     // console.log("end parse Border");
 
-    $("#kresli").prop('disabled', false);
+    makeMaps(); // Automatically call 2d map on file upload
 	}
 
 minmax(x, y) {
@@ -73,7 +73,7 @@ minmax(x, y) {
 document.getElementById('file').onchange = function(){
   // console.log('start load file');
   var formData = new FormData();
-  formData.append('file', $('#file')[0].files[0]);  
+  formData.append('file', $('#file')[0].files[0]);
   $.ajax({
          url : 'assets/ajax/parser.php',
          type : 'POST',
