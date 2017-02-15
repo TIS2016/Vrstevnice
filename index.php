@@ -67,7 +67,7 @@
         <label>Rozostrenie <input class="form-control" type="text" id="blur" value='2' name="blur"> </input>   </label>
         <label>Výškový rozdiel <input class="form-control" type="text" id="heightDifference" value='500' name="heightDifference"> </input>  </label>
         <div class="checkbox">
-          <label><input id="chcekHeightmap" type="checkbox" value="">Zobraziť heightmap 1</label>
+          <label><input id="chcekHeightmap" type="checkbox" value="">Zobraziť heightmapu</label>
         </div>
       </div>
 		<!--CANVAS FOR  HEIGHTMAP  -->
