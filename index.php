@@ -49,7 +49,7 @@
           <div class="col-xs-4">
 
             <div class="btn-group pull-right" role="group" aria-label="...">
-              <button type="button" id="kresli" class="btn btn-success" disabled="disabled" onclick="makeMaps()">Vykresli</button>
+              <!-- <button type="button" id="kresli" class="btn btn-success" disabled="disabled" onclick="makeMaps()">Vykresli</button> -->
               <button type="button" id="download" class="btn btn-default" disabled="disabled" onclick="location.href='\'+img+'\'">Stiahnúť mapu</button>
               <button type="button" id="render" class="btn btn-info" disabled="disabled" onclick="start3d()">Vymodelovať</button>
             </div>
